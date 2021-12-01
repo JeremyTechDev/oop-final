@@ -77,7 +77,7 @@ public class Principal extends JFrame {
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_1);
 		
-		JMenu mnNewMenu_3 = new JMenu("Customers\r\n\r\n");
+		JMenu mnNewMenu_3 = new JMenu("Customers");
 		menuBar.add(mnNewMenu_3);
 		
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Customer List");

@@ -3,11 +3,11 @@ package Logical;
 public class Microprocessor extends Component {
 	private String brand;
 	private String model;
-	private MicroprocessorConnectionType connectorType;
-	private MicroprocessorFrecuency speed;
+	private String connectorType;
+	private String speed;
 
 	public Microprocessor(float price, Integer quantity, Integer serialNumber, Integer minQuantity, Provider provider,
-			String brand, String model, MicroprocessorConnectionType connectorType, MicroprocessorFrecuency speed) {
+			String brand, String model, String connectorType, String speed) {
 		super(price, quantity, serialNumber, minQuantity, provider);
 		this.brand = brand;
 		this.model = model;
@@ -31,19 +31,19 @@ public class Microprocessor extends Component {
 		this.model = model;
 	}
 
-	public MicroprocessorConnectionType getConnectorType() {
+	public String getConnectorType() {
 		return connectorType;
 	}
 
-	public void setConnectorType(MicroprocessorConnectionType connectorType) {
+	public void setConnectorType(String connectorType) {
 		this.connectorType = connectorType;
 	}
 
-	public MicroprocessorFrecuency getSpeed() {
+	public String getSpeed() {
 		return speed;
 	}
 
-	public void setSpeed(MicroprocessorFrecuency speed) {
+	public void setSpeed(String speed) {
 		this.speed = speed;
 	}
 

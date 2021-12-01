@@ -9,14 +9,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import Logical.ConnectionType;
+import Logical.Component;
 import Logical.HardDisk;
-import Logical.HardDiskType;
 import Logical.Microprocessor;
 import Logical.Motherboard;
 import Logical.Provider;
 import Logical.RamCard;
-import Logical.RamType;
 import Logical.Shop;
 
 import javax.swing.JLabel;
@@ -34,29 +32,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
-import Logical.MotherBoardManufacterer;
-import Logical.MotherBoardModel;
-import Logical.MicroprocessorModel;
-import Logical.MicroprocessorConnectionType;
-import Logical.MicroprocessorFrecuency;
-import Logical.RamSize;
-import Logical.RamManufacterer;
-import Logical.HardDiskManufacterer;
-import Logical.HardDiskModel;
-import Logical.HardDiskSize;
-import Logical.MicroprocessorManufacturer;
 
 public class NewProducts extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField Suppliertxt;
-	private JTextField SupplierRNCtxt;
-	private JTextField PhoneNumbertxt;
-	private JTextField ProductPricetxt;
-	private JTextField Productcodetxt;
-	private JTextField ProductStatetxt;
-	private JTextField amountTxt;
-	private JTextField paymentMethodtxt;
 	private JRadioButton Rambtn;
 	private JRadioButton StorageDiskbtn;
 	private JRadioButton Microprocessorsbtn;
@@ -65,50 +44,34 @@ public class NewProducts extends JDialog {
 	private JPanel MicroprocessorsPanel;
 	private JPanel StorageDiskPanel;
 	private JPanel RamPanel;
+	private JTextField rncTxt;
+	private JTextField nameTxt;
+	private JTextField addressTxt;
+	private JTextField phoneTxt;
+	private JTextField textField;
+	private JComboBox methodTxt;
+	private JSpinner minTxt;
+	private JSpinner priceTxt;
+	private JSpinner serialTxt;
+	private JSpinner quantityTxt;
+
+	private Provider provider = null;
 
 	public NewProducts() {
 		setTitle("New Products");
 		setResizable(false);
 		setModal(true);
-		setBounds(100, 100, 650, 522);
+		setBounds(100, 100, 650, 573);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Supplier:");
-		lblNewLabel.setBounds(50, 30, 75, 25);
-		contentPanel.add(lblNewLabel);
-
-		Suppliertxt = new JTextField();
-		Suppliertxt.setBounds(50, 60, 100, 25);
-		contentPanel.add(Suppliertxt);
-		Suppliertxt.setColumns(10);
-
-		JLabel lblSupplierRnc = new JLabel("Supplier RNC:");
-		lblSupplierRnc.setBounds(200, 30, 100, 25);
-		contentPanel.add(lblSupplierRnc);
-
-		SupplierRNCtxt = new JTextField();
-		SupplierRNCtxt.setEditable(false);
-		SupplierRNCtxt.setColumns(10);
-		SupplierRNCtxt.setBounds(200, 60, 100, 25);
-		contentPanel.add(SupplierRNCtxt);
-
-		JLabel lblPhoneNumber = new JLabel("Phone Number:");
-		lblPhoneNumber.setBounds(350, 30, 100, 25);
-		contentPanel.add(lblPhoneNumber);
-
-		PhoneNumbertxt = new JTextField();
-		PhoneNumbertxt.setColumns(10);
-		PhoneNumbertxt.setBounds(350, 60, 100, 25);
-		contentPanel.add(PhoneNumbertxt);
-
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Add Stock",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(30, 101, 585, 100);
+		panel.setBounds(30, 154, 585, 100);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 
@@ -182,30 +145,12 @@ public class NewProducts extends JDialog {
 		Motherboardbtn.setBounds(20, 50, 138, 21);
 		panel.add(Motherboardbtn);
 
-		ProductPricetxt = new JTextField();
-		ProductPricetxt.setColumns(10);
-		ProductPricetxt.setBounds(50, 405, 125, 25);
-		contentPanel.add(ProductPricetxt);
-
-		JLabel lblDate = new JLabel("Date:");
-		lblDate.setBounds(500, 30, 100, 25);
-		contentPanel.add(lblDate);
-
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerDateModel());
-		spinner.setBounds(500, 60, 100, 25);
-		contentPanel.add(spinner);
-		
-		JLabel lblNewLabel_2_2 = new JLabel("Product Code:");
-		lblNewLabel_2_2.setBounds(50, 327, 91, 13);
+		JLabel lblNewLabel_2_2 = new JLabel("Serial Number:");
+		lblNewLabel_2_2.setBounds(50, 378, 125, 13);
 		contentPanel.add(lblNewLabel_2_2);
 
-		JLabel lblNewLabel_2_1_2 = new JLabel("Current State:");
-		lblNewLabel_2_1_2.setBounds(262, 327, 91, 13);
-		contentPanel.add(lblNewLabel_2_1_2);
-
 		JLabel lblNewLabel_2_1_2_1 = new JLabel("Order Quantity");
-		lblNewLabel_2_1_2_1.setBounds(470, 327, 125, 13);
+		lblNewLabel_2_1_2_1.setBounds(262, 378, 125, 13);
 		contentPanel.add(lblNewLabel_2_1_2_1);
 
 		MotherboardPanel = new JPanel();
@@ -213,7 +158,7 @@ public class NewProducts extends JDialog {
 		MotherboardPanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Product Description", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		MotherboardPanel.setBounds(30, 211, 585, 100);
+		MotherboardPanel.setBounds(30, 266, 585, 100);
 		contentPanel.add(MotherboardPanel);
 
 		JLabel lblNewLabel_5 = new JLabel("Manufacturer:");
@@ -233,23 +178,25 @@ public class NewProducts extends JDialog {
 		MotherboardPanel.add(lblNewLabel_5_3);
 
 		JComboBox MBManufacturercbx = new JComboBox();
-		MBManufacturercbx.setModel(new DefaultComboBoxModel(MotherBoardManufacterer.values()));
+		MBManufacturercbx.setModel(new DefaultComboBoxModel(new String[] { "ASUS", "ASROCK", "GIGABYTE", "MSI" }));
 		MBManufacturercbx.setBounds(20, 55, 115, 25);
 		MotherboardPanel.add(MBManufacturercbx);
 
 		JComboBox MBModelcbx = new JComboBox();
-		MBModelcbx.setModel(new DefaultComboBoxModel(MotherBoardModel.values()));
+		MBModelcbx.setModel(new DefaultComboBoxModel(
+				new String[] { "B350", "B350H", "B450", "B450H", "B550", "B550H", "Z390", "Z490" }));
 		MBModelcbx.setToolTipText("");
 		MBModelcbx.setBounds(147, 55, 115, 25);
 		MotherboardPanel.add(MBModelcbx);
 
 		JComboBox MBConectionTypecbx = new JComboBox();
-		MBConectionTypecbx.setModel(new DefaultComboBoxModel(ConnectionType.values()));
+		MBConectionTypecbx.setModel(new DefaultComboBoxModel(
+				new String[] { "AM1", "AM4", "TRX", "TRX4", "LGA1150", "LGA1151", "LGA1200" }));
 		MBConectionTypecbx.setBounds(286, 55, 115, 25);
 		MotherboardPanel.add(MBConectionTypecbx);
 
 		JComboBox MBRamTypecbx = new JComboBox();
-		MBRamTypecbx.setModel(new DefaultComboBoxModel(RamType.values()));
+		MBRamTypecbx.setModel(new DefaultComboBoxModel(new String[] { "DDR", "DDR2", "DDR3", "DDR4" }));
 		MBRamTypecbx.setBounds(424, 55, 124, 25);
 		MotherboardPanel.add(MBRamTypecbx);
 
@@ -258,7 +205,7 @@ public class NewProducts extends JDialog {
 		MicroprocessorsPanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Product Description", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		MicroprocessorsPanel.setBounds(30, 211, 585, 100);
+		MicroprocessorsPanel.setBounds(30, 266, 585, 100);
 		contentPanel.add(MicroprocessorsPanel);
 
 		JLabel lblNewLabel_6 = new JLabel("Manufacturer:");
@@ -266,7 +213,7 @@ public class NewProducts extends JDialog {
 		MicroprocessorsPanel.add(lblNewLabel_6);
 
 		JComboBox PSMakecbx = new JComboBox();
-		PSMakecbx.setModel(new DefaultComboBoxModel(MicroprocessorManufacturer.values()));
+		PSMakecbx.setModel(new DefaultComboBoxModel(new String[] { "INTEL", "AMD" }));
 		PSMakecbx.setBounds(20, 55, 125, 25);
 		MicroprocessorsPanel.add(PSMakecbx);
 
@@ -277,23 +224,26 @@ public class NewProducts extends JDialog {
 		JLabel lblNewLabel_6_2 = new JLabel("Conection Type:");
 		lblNewLabel_6_2.setBounds(320, 29, 103, 21);
 		MicroprocessorsPanel.add(lblNewLabel_6_2);
-		
+
 		JLabel lblNewLabel_6_3 = new JLabel("Frequency (GHZ):");
 		lblNewLabel_6_3.setBounds(470, 29, 103, 21);
 		MicroprocessorsPanel.add(lblNewLabel_6_3);
 
 		JComboBox PSModelcbx = new JComboBox();
-		PSModelcbx.setModel(new DefaultComboBoxModel(MicroprocessorModel.values()));
+		PSModelcbx.setModel(new DefaultComboBoxModel(new String[] { "AMD RYZEN 3", "AMD RYZEN 5 ", "AMD RYZEN 7",
+				"AMD RYZEN 9", "INTEL I3", "INTEL I5 ", "INTEL I7", "INTEL I9" }));
 		PSModelcbx.setBounds(166, 55, 125, 25);
 		MicroprocessorsPanel.add(PSModelcbx);
 
 		JComboBox PSConectionTypecbx = new JComboBox();
-		PSConectionTypecbx.setModel(new DefaultComboBoxModel(MicroprocessorConnectionType.values()));
+		PSConectionTypecbx.setModel(new DefaultComboBoxModel(
+				new String[] { "AM1", "AM4", "TRX", "TRX4", "LGA1150", "LGA1151", "LGA1200" }));
 		PSConectionTypecbx.setBounds(320, 55, 125, 25);
 		MicroprocessorsPanel.add(PSConectionTypecbx);
 
 		JComboBox PSFrequencycbx = new JComboBox();
-		PSFrequencycbx.setModel(new DefaultComboBoxModel(MicroprocessorFrecuency.values()));
+		PSFrequencycbx.setModel(new DefaultComboBoxModel(new String[] { "2.7 GHZ", "2.9 GHZ", "3.0 GHZ", "3.6 GHZ",
+				"3.7 GHZ", "3.8 GHZ", "4.0 GHZ", "4.2 GHZ", "4.3 GHZ", "4.6 GHZ", "5.0 GHZ" }));
 		PSFrequencycbx.setBounds(470, 55, 99, 25);
 		MicroprocessorsPanel.add(PSFrequencycbx);
 
@@ -302,7 +252,7 @@ public class NewProducts extends JDialog {
 		StorageDiskPanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Product Description", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		StorageDiskPanel.setBounds(30, 211, 585, 100);
+		StorageDiskPanel.setBounds(30, 266, 585, 100);
 		contentPanel.add(StorageDiskPanel);
 
 		JLabel lblNewLabel_7 = new JLabel("Manufacturer:");
@@ -310,7 +260,9 @@ public class NewProducts extends JDialog {
 		StorageDiskPanel.add(lblNewLabel_7);
 
 		JComboBox SDManufacturercbx = new JComboBox();
-		SDManufacturercbx.setModel(new DefaultComboBoxModel(HardDiskManufacterer.values()));
+		SDManufacturercbx.setModel(
+				new DefaultComboBoxModel(new String[] { "Corsair", "Kingston", "Lexar", "Micron", "Mushkin", "PNY",
+						"Pretec", "Samsung", "SanDisk", "Silicon Power", "Sony", "TDK", "Verbatim", "Viking", "WD" }));
 		SDManufacturercbx.setBounds(20, 55, 113, 25);
 		StorageDiskPanel.add(SDManufacturercbx);
 
@@ -327,17 +279,20 @@ public class NewProducts extends JDialog {
 		StorageDiskPanel.add(lblNewLabel_7_3);
 
 		JComboBox SDModelcbx = new JComboBox();
-		SDModelcbx.setModel(new DefaultComboBoxModel(HardDiskModel.values()));
+		SDModelcbx.setModel(
+				new DefaultComboBoxModel(new String[] { "970", "970 PRO", "980", "980 PRO", "BARRACUDA", "FIRECUDA" }));
 		SDModelcbx.setBounds(165, 55, 108, 25);
 		StorageDiskPanel.add(SDModelcbx);
 
 		JComboBox SDMemorySizecbx = new JComboBox();
-		SDMemorySizecbx.setModel(new DefaultComboBoxModel(HardDiskSize.values()));
+		SDMemorySizecbx.setModel(new DefaultComboBoxModel(new String[] { "120GB", "128GB", "240GB", "256GB", "400GB",
+				"500GB", "512GB", "750GB", "1TB", "2TB", "4TB", "6TB", "8TB", "16TB" }));
 		SDMemorySizecbx.setBounds(320, 55, 106, 25);
 		StorageDiskPanel.add(SDMemorySizecbx);
 
 		JComboBox SDTypecbx = new JComboBox();
-		SDTypecbx.setModel(new DefaultComboBoxModel(HardDiskType.values()));
+		SDTypecbx.setModel(
+				new DefaultComboBoxModel(new String[] { "SATA", "SATA HYBRID", "SSD M.2", "SSD NVME", "SSD SATA" }));
 		SDTypecbx.setBounds(470, 55, 100, 25);
 		StorageDiskPanel.add(SDTypecbx);
 
@@ -346,7 +301,7 @@ public class NewProducts extends JDialog {
 		RamPanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Product Description", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		RamPanel.setBounds(30, 211, 585, 100);
+		RamPanel.setBounds(30, 266, 585, 100);
 		contentPanel.add(RamPanel);
 
 		JLabel lblNewLabel_2 = new JLabel("Manufacturer:");
@@ -364,55 +319,129 @@ public class NewProducts extends JDialog {
 		RamPanel.add(lblNewLabel_4);
 
 		JComboBox RamMakecbx = new JComboBox();
-		RamMakecbx.setModel(new DefaultComboBoxModel(RamManufacterer.values()));
+		RamMakecbx.setModel(new DefaultComboBoxModel(
+				new String[] { "AOpen", "Arch Memory", "Billionton Systems", "Corsair", "Crucial", "Fujitsu", "G.SKILL",
+						"HYPER X", "INNO3D", "Intel", "KingMax", "Kingston", "Lenovo", "Microchip", "Micron", "PNY",
+						"Pretec", "Rambus", "Samsung", "Simmtronics", "Thermaltake", "Verbatim", "Viking" }));
 		RamMakecbx.setBounds(20, 55, 125, 25);
 		RamPanel.add(RamMakecbx);
 
 		JComboBox RamSizetxt = new JComboBox();
-		RamSizetxt.setModel(new DefaultComboBoxModel(RamSize.values()));
+		RamSizetxt.setModel(
+				new DefaultComboBoxModel(new String[] { "4 GB", "8 GB", "16 GB", "32 GB", "64 GB", "128 GB" }));
 		RamSizetxt.setBounds(232, 55, 125, 25);
 		RamPanel.add(RamSizetxt);
 
 		JComboBox RamTypecbx = new JComboBox();
-		RamTypecbx.setModel(new DefaultComboBoxModel(RamType.values()));
+		RamTypecbx.setModel(new DefaultComboBoxModel(new String[] { "DDR", "DDR2", "DDR3", "DDR4" }));
 		RamTypecbx.setBounds(440, 55, 125, 25);
 		RamPanel.add(RamTypecbx);
 
-		Productcodetxt = new JTextField();
-		Productcodetxt.setColumns(10);
-		Productcodetxt.setBounds(50, 350, 125, 25);
-		contentPanel.add(Productcodetxt);
-
-		ProductStatetxt = new JTextField();
-		ProductStatetxt.setColumns(10);
-		ProductStatetxt.setBounds(262, 350, 125, 25);
-		contentPanel.add(ProductStatetxt);
-
-		JSpinner quantityTxt = new JSpinner();
-		quantityTxt.setBounds(470, 350, 125, 25);
+		quantityTxt = new JSpinner();
+		quantityTxt.setBounds(262, 401, 125, 25);
 		contentPanel.add(quantityTxt);
 
 		JLabel lblNewLabel_2_1_1_1_1 = new JLabel("Price:");
-		lblNewLabel_2_1_1_1_1.setBounds(50, 385, 91, 13);
+		lblNewLabel_2_1_1_1_1.setBounds(50, 436, 91, 13);
 		contentPanel.add(lblNewLabel_2_1_1_1_1);
-		
+
 		JLabel lblNewLabel_2_1_2_2 = new JLabel("Min Quantity:");
-		lblNewLabel_2_1_2_2.setBounds(262, 385, 91, 13);
+		lblNewLabel_2_1_2_2.setBounds(262, 436, 91, 13);
 		contentPanel.add(lblNewLabel_2_1_2_2);
 
 		JLabel lblNewLabel_2_1_2_3 = new JLabel("Payment Method:");
-		lblNewLabel_2_1_2_3.setBounds(470, 385, 125, 13);
+		lblNewLabel_2_1_2_3.setBounds(465, 378, 125, 13);
 		contentPanel.add(lblNewLabel_2_1_2_3);
 
-		amountTxt = new JTextField();
-		amountTxt.setColumns(10);
-		amountTxt.setBounds(262, 405, 125, 25);
-		contentPanel.add(amountTxt);
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Provider", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(27, 26, 588, 111);
+		contentPanel.add(panel_1);
+		panel_1.setLayout(null);
 
-		paymentMethodtxt = new JTextField();
-		paymentMethodtxt.setColumns(10);
-		paymentMethodtxt.setBounds(470, 405, 125, 25);
-		contentPanel.add(paymentMethodtxt);
+		JLabel lblNewLabel = new JLabel("RNC:");
+		lblNewLabel.setBounds(25, 27, 61, 16);
+		panel_1.add(lblNewLabel);
+
+		rncTxt = new JTextField();
+		rncTxt.setBounds(25, 44, 130, 26);
+		panel_1.add(rncTxt);
+		rncTxt.setColumns(10);
+
+		JButton btnNewButton = new JButton("Find");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String rnc = rncTxt.getText();
+				provider = Shop.getInstance().getProviderByRNC(rnc);
+
+				if (provider == null) {
+					enableEditProvider();
+				} else {
+					nameTxt.setText(provider.getName());
+					addressTxt.setText(provider.getAddress());
+					phoneTxt.setText(provider.getPhone());
+				}
+			}
+		});
+		btnNewButton.setBounds(25, 75, 130, 29);
+		panel_1.add(btnNewButton);
+
+		JLabel lblNewLabel_8 = new JLabel("Name:");
+		lblNewLabel_8.setBounds(176, 10, 61, 16);
+		panel_1.add(lblNewLabel_8);
+
+		nameTxt = new JTextField();
+		nameTxt.setEnabled(false);
+		nameTxt.setBounds(175, 27, 184, 26);
+		panel_1.add(nameTxt);
+		nameTxt.setColumns(10);
+
+		JLabel lblNewLabel_8_1 = new JLabel("Address:");
+		lblNewLabel_8_1.setBounds(177, 60, 61, 16);
+		panel_1.add(lblNewLabel_8_1);
+
+		addressTxt = new JTextField();
+		addressTxt.setEnabled(false);
+		addressTxt.setColumns(10);
+		addressTxt.setBounds(176, 77, 178, 26);
+		panel_1.add(addressTxt);
+
+		JLabel lblNewLabel_8_2 = new JLabel("Phone number:");
+		lblNewLabel_8_2.setBounds(377, 11, 136, 16);
+		panel_1.add(lblNewLabel_8_2);
+
+		phoneTxt = new JTextField();
+		phoneTxt.setEnabled(false);
+		phoneTxt.setColumns(10);
+		phoneTxt.setBounds(376, 28, 184, 26);
+		panel_1.add(phoneTxt);
+
+		JLabel lblNewLabel_8_1_1 = new JLabel("Date:");
+		lblNewLabel_8_1_1.setBounds(378, 61, 61, 16);
+		panel_1.add(lblNewLabel_8_1_1);
+
+		textField = new JTextField();
+		textField.setEnabled(false);
+		textField.setBounds(375, 77, 182, 26);
+		panel_1.add(textField);
+		textField.setColumns(10);
+
+		methodTxt = new JComboBox();
+		methodTxt.setModel(new DefaultComboBoxModel(new String[] { "Paid", "Credit" }));
+		methodTxt.setBounds(465, 399, 125, 27);
+		contentPanel.add(methodTxt);
+
+		minTxt = new JSpinner();
+		minTxt.setBounds(262, 456, 125, 26);
+		contentPanel.add(minTxt);
+
+		priceTxt = new JSpinner();
+		priceTxt.setBounds(50, 456, 125, 26);
+		contentPanel.add(priceTxt);
+
+		serialTxt = new JSpinner();
+		serialTxt.setBounds(50, 401, 125, 26);
+		contentPanel.add(serialTxt);
 		setLocationRelativeTo(null);
 		{
 			JPanel buttonPane = new JPanel();
@@ -424,46 +453,62 @@ public class NewProducts extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 
-						String providerName = Suppliertxt.getText();
-						String providerRnc = SupplierRNCtxt.getText();
-						String providerAddress = "Nothing";
-						String providerPhone = PhoneNumbertxt.getText();
-						Provider provider = new Provider(providerName, providerRnc, providerPhone, providerAddress, 0);
+						// Register provider if not found
+						if (provider == null) {
+							String providerName = nameTxt.getText();
+							String providerRnc = rncTxt.getText();
+							String providerAddress = addressTxt.getText();
+							String providerPhone = phoneTxt.getText();
+							provider = new Provider(providerName, providerRnc, providerPhone, providerAddress, 0);
+							// TODO: this returns false if the registration is not possible
+							Shop.getInstance().registerProvider(provider);
+						}
 
-						float price = Float.parseFloat(ProductPricetxt.getText());
+						Integer serial = Integer.parseInt(serialTxt.getValue().toString());
 						Integer quantity = Integer.parseInt(quantityTxt.getValue().toString());
-						Integer serial = Integer.parseInt(Productcodetxt.getText());
-						Integer minimun = 1;
+						Integer minimun = Integer.parseInt(minTxt.getValue().toString());
+						float price = Float.parseFloat(priceTxt.getValue().toString());
+						String method = (String) methodTxt.getSelectedItem();
 
+						if (minimun > quantity) {
+							// TODO: Add an alarm here: minimun cannot be bigger than quantity
+							return;
+						}
+
+						Component newComponent = null;
 						if (Motherboardbtn.isSelected()) {
-							String brand = (String) MBManufacturercbx.getSelectedItem();
-							String model = (String) MBModelcbx.getSelectedItem();
-							ConnectionType connectionType = (ConnectionType) MBConectionTypecbx.getSelectedItem();
-							RamType ramType = (RamType) MBRamTypecbx.getSelectedItem();
-							Motherboard motherboard = new Motherboard(price, quantity, serial, minimun, provider, brand,
-									model, connectionType, ramType, new ArrayList<HardDiskType>());
+							String brand = MBManufacturercbx.getSelectedItem().toString();
+							String model = MBModelcbx.getSelectedItem().toString();
+							String connectionType = MBConectionTypecbx.getSelectedItem().toString();
+							String ramType = MBRamTypecbx.getSelectedItem().toString();
+							newComponent = new Motherboard(price, quantity, serial, minimun, provider, brand, model,
+									connectionType, ramType);
 						} else if (StorageDiskbtn.isSelected()) {
-							String brand = (String) SDManufacturercbx.getSelectedItem();
-							String model = (String) SDModelcbx.getSelectedItem();
-							HardDiskSize capacity = (HardDiskSize) SDMemorySizecbx.getSelectedItem();
-							HardDiskType connectionType = (HardDiskType) SDTypecbx.getSelectedItem();
-							HardDisk hardDisk = new HardDisk(price, quantity, serial, minimun, provider, brand, model,
+							String brand = SDManufacturercbx.getSelectedItem().toString();
+							String model = SDModelcbx.getSelectedItem().toString();
+							String capacity = SDMemorySizecbx.getSelectedItem().toString();
+							String connectionType = SDTypecbx.getSelectedItem().toString();
+							newComponent = new HardDisk(price, quantity, serial, minimun, provider, brand, model,
 									capacity, connectionType);
 						} else if (Microprocessorsbtn.isSelected()) {
-							String brand = (String) PSMakecbx.getSelectedItem();
-							String model = (String) PSModelcbx.getSelectedItem();
-							MicroprocessorFrecuency speed = (MicroprocessorFrecuency) SDMemorySizecbx.getSelectedItem();
-							MicroprocessorConnectionType type = (MicroprocessorConnectionType) PSConectionTypecbx
-									.getSelectedItem();
-							Microprocessor microprocessor = new Microprocessor(price, quantity, serial, minimun,
-									provider, brand, model, type, speed);
+							String brand = PSMakecbx.getSelectedItem().toString();
+							String model = PSModelcbx.getSelectedItem().toString();
+							String speed = SDMemorySizecbx.getSelectedItem().toString();
+							String type = PSConectionTypecbx.getSelectedItem().toString();
+							newComponent = new Microprocessor(price, quantity, serial, minimun, provider, brand, model,
+									type, speed);
 						} else if (Rambtn.isSelected()) {
-							String brand = (String) RamMakecbx.getSelectedItem();
-							RamSize capacity = (RamSize) RamSizetxt.getSelectedItem();
-							RamType type = (RamType) RamTypecbx.getSelectedItem();
-							RamCard ram = new RamCard(price, quantity, serial, minimun, provider, brand, capacity,
+							String brand = RamMakecbx.getSelectedItem().toString();
+							String capacity = RamSizetxt.getSelectedItem().toString();
+							String type = RamTypecbx.getSelectedItem().toString();
+							newComponent = new RamCard(price, quantity, serial, minimun, provider, brand, capacity,
 									type);
 						}
+
+						// TODO: this return false if the component could not be added
+						Shop.getInstance().registerComponent(newComponent);
+						// TODO: set alarm
+						clear();
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -476,5 +521,18 @@ public class NewProducts extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+
+	public void enableEditProvider() {
+		nameTxt.setEnabled(true);
+		addressTxt.setEnabled(true);
+		phoneTxt.setEnabled(true);
+	}
+
+	public void clear() {
+		minTxt.setValue(0);
+		priceTxt.setValue(0);
+		quantityTxt.setValue(0);
+		serialTxt.setValue(0);
 	}
 }

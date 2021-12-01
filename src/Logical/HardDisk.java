@@ -3,11 +3,11 @@ package Logical;
 public class HardDisk extends Component {
 	private String brand;
 	private String model;
-	private HardDiskSize capacity;
-	private HardDiskType connectionType;
+	private String capacity;
+	private String connectionType;
 
 	public HardDisk(float price, Integer quantity, Integer serialNumber, Integer minQuantity, Provider provider,
-			String brand, String model, HardDiskSize capacity,  HardDiskType connectionType) {
+			String brand, String model, String capacity,  String connectionType) {
 		super(price, quantity, serialNumber, minQuantity, provider);
 		this.brand = brand;
 		this.model = model;
@@ -31,19 +31,19 @@ public class HardDisk extends Component {
 		this.model = model;
 	}
 
-	public HardDiskSize getCapacity() {
+	public String getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(HardDiskSize capacity) {
+	public void setCapacity(String capacity) {
 		this.capacity = capacity;
 	}
 
-	public HardDiskType getConnectionType() {
+	public String getConnectionType() {
 		return connectionType;
 	}
 
-	public void setConnectionType(HardDiskType connectionType) {
+	public void setConnectionType(String connectionType) {
 		this.connectionType = connectionType;
 	}
 

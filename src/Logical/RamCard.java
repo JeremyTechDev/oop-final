@@ -2,11 +2,11 @@ package Logical;
 
 public class RamCard extends Component {
 	private String brand;
-	private RamSize capacity;
-	private RamType type;
+	private String capacity;
+	private String type;
 
 	public RamCard(float price, Integer quantity, Integer serialNumber, Integer minQuantity, Provider provider,
-			String brand, RamSize capacity, RamType type) {
+			String brand, String capacity, String type) {
 		super(price, quantity, serialNumber, minQuantity, provider);
 		this.brand = brand;
 		this.capacity = capacity;
@@ -21,19 +21,19 @@ public class RamCard extends Component {
 		this.brand = brand;
 	}
 
-	public RamSize getCapacity() {
+	public String getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(RamSize capacity) {
+	public void setCapacity(String capacity) {
 		this.capacity = capacity;
 	}
 
-	public RamType getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(RamType type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
