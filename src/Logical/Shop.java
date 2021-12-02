@@ -2,12 +2,17 @@ package Logical;
 
 import java.util.ArrayList;
 
+
 public class Shop {
 	private ArrayList<Invoice> invoices;
 	private ArrayList<Client> clients;
 	private ArrayList<Provider> providers;
 	private ArrayList<Component> components;
 	private static Shop instance = null;
+	private int AutomaticCodeGenerator;
+	private int CustomerSalesCodeGen;
+	public int CustomerQuantity;
+	
 
 	private Shop() {
 		super();
@@ -15,6 +20,9 @@ public class Shop {
 		this.clients = new ArrayList<Client>();
 		this.providers = new ArrayList<Provider>();
 		this.components = new ArrayList<Component>();
+		AutomaticCodeGenerator = 1000;
+		CustomerSalesCodeGen = 1;
+		CustomerQuantity =0;
 	}
 
 	public static Shop getInstance() {
@@ -32,10 +40,28 @@ public class Shop {
 		}
 		return null;
 	}
-
-	public Component getComponentBySerial(Integer serial) {
+	//Find customer fuction
+	public Client FindCustomerByID(String id) {
+		Client client = null;
+		boolean found = false;
+		int IndexFinder=0;
+		
+		while(!found && IndexFinder<clients.size()) {
+			if(clients.get(IndexFinder).getId().equalsIgnoreCase(id)) {
+				
+				client=clients.get(IndexFinder);
+				found = true;
+			}
+			IndexFinder++;
+		}
+		return client;
+	}
+	
+	
+	//Find ComponentbySerial Number
+	public Component getComponentBySerial(String string) {
 		for (Component comp : this.components) {
-			if (comp.getSerialNumber().equals(serial)) {
+			if (comp.getSerialNumber().equals(string)) {
 				return comp;
 			}
 		}
@@ -62,6 +88,14 @@ public class Shop {
 		}
 
 		return isSaved;
+	}
+
+	public int getAutomaticCodeGenerator() {
+		return AutomaticCodeGenerator;
+	}
+
+	public void setAutomaticCodeGenerator(int automaticCodeGenerator) {
+		AutomaticCodeGenerator = automaticCodeGenerator;
 	}
 
 	public ArrayList<Component> getComponents() {
@@ -94,6 +128,20 @@ public class Shop {
 
 	public void setClients(ArrayList<Client> clients) {
 		this.clients = clients;
+	}
+	
+	public int getCustomerQuantity() {
+		return CustomerQuantity;
+	}
+
+	public void setCustomerQuantity(int customerQuantity) {
+		CustomerQuantity = customerQuantity;
+	}
+
+	public void AddCustomer(Client client) {
+		clients.add(client);
+		CustomerSalesCodeGen++;
+	
 	}
 
 }

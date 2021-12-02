@@ -5,20 +5,15 @@ public class Client {
 	private String name;
 	private String address;
 	private String phone;
-	private String rnc;
-	private float creditLimit;
-	private float invoiceToCollect;
+	private String creditLimit;
 
-	public Client(String id, String name, String address, String phone, String rnc, float creditLimit,
-			float invoiceToCollect) {
+	public Client(String id, String name, String address, String phone, String creditLimit) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.phone = phone;
-		this.rnc = rnc;
 		this.creditLimit = creditLimit;
-		this.invoiceToCollect = invoiceToCollect;
 	}
 
 	public String getId() {
@@ -53,27 +48,11 @@ public class Client {
 		this.phone = phone;
 	}
 
-	public String getRnc() {
-		return rnc;
-	}
-
-	public void setRnc(String rnc) {
-		this.rnc = rnc;
-	}
-
-	public float getCreditLimit() {
+	public String getCreditLimit() {
 		return creditLimit;
 	}
 
-	public void setCreditLimit(float creditLimit) {
+	public void setCreditLimit(String creditLimit) {
 		this.creditLimit = creditLimit;
-	}
-
-	public float getInvoiceToCollect() {
-		return invoiceToCollect;
-	}
-
-	public void setInvoiceToCollect(float invoiceToCollect) {
-		this.invoiceToCollect = invoiceToCollect;
 	}
 }

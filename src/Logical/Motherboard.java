@@ -6,7 +6,7 @@ public class Motherboard extends Component {
 	private String connectorType;
 	private String String;
 
-	public Motherboard(float price, Integer quantity, Integer serialNumber, Integer minQuantity, Provider provider,
+	public Motherboard(float price, Integer quantity, String serialNumber, Integer minQuantity, Provider provider,
 			String brand, String model, String connectorType, String String) {
 		super(price, quantity, serialNumber, minQuantity, provider);
 		this.brand = brand;

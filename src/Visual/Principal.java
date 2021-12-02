@@ -87,6 +87,15 @@ public class Principal extends JFrame {
 				custlist.setVisible(true);
 			}
 		});
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("New Customer");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewCustomer newcustomer = new NewCustomer();
+				newcustomer.setVisible(true);
+			}
+		});
+		mnNewMenu_3.add(mntmNewMenuItem_2);
 		mnNewMenu_3.add(mntmNewMenuItem_6);
 		
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Quotations");
@@ -130,6 +139,15 @@ public class Principal extends JFrame {
 			}
 		});
 		mnNewMenu_4.add(mntmNewMenuItem_9);
+		
+		JMenu mnNewMenu_5 = new JMenu("Backup");
+		menuBar.add(mnNewMenu_5);
+		
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Backup File");
+		mnNewMenu_5.add(mntmNewMenuItem_5);
+		
+		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Load File");
+		mnNewMenu_5.add(mntmNewMenuItem_10);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

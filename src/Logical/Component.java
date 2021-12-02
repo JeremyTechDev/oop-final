@@ -4,11 +4,11 @@ public abstract class Component {
 
 	protected float price;
 	protected Integer quantity;
-	protected Integer serialNumber;
+	protected String serialNumber;
 	protected Integer minQuantity;
 	protected Provider provider;
 
-	public Component(float price, Integer quantity, Integer serialNumber, Integer minQuantity, Provider provider) {
+	public Component(float price, Integer quantity, String serialNumber, Integer minQuantity, Provider provider) {
 		super();
 		this.price = price;
 		this.quantity = quantity;
@@ -33,11 +33,11 @@ public abstract class Component {
 		this.quantity = quantity;
 	}
 
-	public Integer getSerialNumber() {
+	public String getSerialNumber() {
 		return serialNumber;
 	}
 
-	public void setSerialNumber(Integer serialNumber) {
+	public void setSerialNumber(String serialNumber) {
 		this.serialNumber = serialNumber;
 	}
 

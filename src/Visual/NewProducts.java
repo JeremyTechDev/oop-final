@@ -52,10 +52,14 @@ public class NewProducts extends JDialog {
 	private JComboBox methodTxt;
 	private JSpinner minTxt;
 	private JSpinner priceTxt;
-	private JSpinner serialTxt;
 	private JSpinner quantityTxt;
 
 	private Provider provider = null;
+	private JComboBox MBManufacturercbx;
+	private JComboBox MBModelcbx;
+	private JComboBox MBConectionTypecbx;
+	private JComboBox MBRamTypecbx;
+	private JTextField Serialtxt;
 
 	public NewProducts() {
 		setTitle("New Products");
@@ -67,17 +71,17 @@ public class NewProducts extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(
+		JPanel StockProductspanel = new JPanel();
+		StockProductspanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Add Stock",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(30, 154, 585, 100);
-		contentPanel.add(panel);
-		panel.setLayout(null);
+		StockProductspanel.setBounds(30, 154, 585, 100);
+		contentPanel.add(StockProductspanel);
+		StockProductspanel.setLayout(null);
 
 		JLabel lblNewLabel_1 = new JLabel("Product Type:");
 		lblNewLabel_1.setBounds(20, 22, 150, 25);
-		panel.add(lblNewLabel_1);
+		StockProductspanel.add(lblNewLabel_1);
 
 		Rambtn = new JRadioButton("Memory RAM");
 		Rambtn.addActionListener(new ActionListener() {
@@ -93,7 +97,7 @@ public class NewProducts extends JDialog {
 			}
 		});
 		Rambtn.setBounds(446, 50, 133, 21);
-		panel.add(Rambtn);
+		StockProductspanel.add(Rambtn);
 
 		StorageDiskbtn = new JRadioButton("Storage Disk");
 		StorageDiskbtn.addActionListener(new ActionListener() {
@@ -110,7 +114,7 @@ public class NewProducts extends JDialog {
 			}
 		});
 		StorageDiskbtn.setBounds(156, 50, 138, 21);
-		panel.add(StorageDiskbtn);
+		StockProductspanel.add(StorageDiskbtn);
 
 		Microprocessorsbtn = new JRadioButton("Microprocessors");
 		Microprocessorsbtn.addActionListener(new ActionListener() {
@@ -126,7 +130,7 @@ public class NewProducts extends JDialog {
 			}
 		});
 		Microprocessorsbtn.setBounds(298, 50, 150, 21);
-		panel.add(Microprocessorsbtn);
+		StockProductspanel.add(Microprocessorsbtn);
 
 		Motherboardbtn = new JRadioButton("Motherboard");
 		Motherboardbtn.setSelected(true);
@@ -143,7 +147,7 @@ public class NewProducts extends JDialog {
 			}
 		});
 		Motherboardbtn.setBounds(20, 50, 138, 21);
-		panel.add(Motherboardbtn);
+		StockProductspanel.add(Motherboardbtn);
 
 		JLabel lblNewLabel_2_2 = new JLabel("Serial Number:");
 		lblNewLabel_2_2.setBounds(50, 378, 125, 13);
@@ -177,25 +181,25 @@ public class NewProducts extends JDialog {
 		lblNewLabel_5_3.setBounds(424, 29, 103, 21);
 		MotherboardPanel.add(lblNewLabel_5_3);
 
-		JComboBox MBManufacturercbx = new JComboBox();
+		MBManufacturercbx = new JComboBox();
 		MBManufacturercbx.setModel(new DefaultComboBoxModel(new String[] { "ASUS", "ASROCK", "GIGABYTE", "MSI" }));
 		MBManufacturercbx.setBounds(20, 55, 115, 25);
 		MotherboardPanel.add(MBManufacturercbx);
 
-		JComboBox MBModelcbx = new JComboBox();
+		MBModelcbx = new JComboBox();
 		MBModelcbx.setModel(new DefaultComboBoxModel(
 				new String[] { "B350", "B350H", "B450", "B450H", "B550", "B550H", "Z390", "Z490" }));
 		MBModelcbx.setToolTipText("");
 		MBModelcbx.setBounds(147, 55, 115, 25);
 		MotherboardPanel.add(MBModelcbx);
 
-		JComboBox MBConectionTypecbx = new JComboBox();
+		MBConectionTypecbx = new JComboBox();
 		MBConectionTypecbx.setModel(new DefaultComboBoxModel(
 				new String[] { "AM1", "AM4", "TRX", "TRX4", "LGA1150", "LGA1151", "LGA1200" }));
 		MBConectionTypecbx.setBounds(286, 55, 115, 25);
 		MotherboardPanel.add(MBConectionTypecbx);
 
-		JComboBox MBRamTypecbx = new JComboBox();
+		MBRamTypecbx = new JComboBox();
 		MBRamTypecbx.setModel(new DefaultComboBoxModel(new String[] { "DDR", "DDR2", "DDR3", "DDR4" }));
 		MBRamTypecbx.setBounds(424, 55, 124, 25);
 		MotherboardPanel.add(MBRamTypecbx);
@@ -438,10 +442,11 @@ public class NewProducts extends JDialog {
 		priceTxt = new JSpinner();
 		priceTxt.setBounds(50, 456, 125, 26);
 		contentPanel.add(priceTxt);
-
-		serialTxt = new JSpinner();
-		serialTxt.setBounds(50, 401, 125, 26);
-		contentPanel.add(serialTxt);
+		
+		Serialtxt = new JTextField();
+		Serialtxt.setBounds(50, 401, 125, 26);
+		contentPanel.add(Serialtxt);
+		Serialtxt.setColumns(10);
 		setLocationRelativeTo(null);
 		{
 			JPanel buttonPane = new JPanel();
@@ -449,8 +454,8 @@ public class NewProducts extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
+				JButton SaveProductsbtn = new JButton("Save Product");
+				SaveProductsbtn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 
 						// Register provider if not found
@@ -464,7 +469,7 @@ public class NewProducts extends JDialog {
 							Shop.getInstance().registerProvider(provider);
 						}
 
-						Integer serial = Integer.parseInt(serialTxt.getValue().toString());
+						String serial = (String) Serialtxt.getText();
 						Integer quantity = Integer.parseInt(quantityTxt.getValue().toString());
 						Integer minimun = Integer.parseInt(minTxt.getValue().toString());
 						float price = Float.parseFloat(priceTxt.getValue().toString());
@@ -511,9 +516,9 @@ public class NewProducts extends JDialog {
 						clear();
 					}
 				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				SaveProductsbtn.setActionCommand("OK");
+				buttonPane.add(SaveProductsbtn);
+				getRootPane().setDefaultButton(SaveProductsbtn);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
@@ -524,15 +529,15 @@ public class NewProducts extends JDialog {
 	}
 
 	public void enableEditProvider() {
-		nameTxt.setEnabled(true);
-		addressTxt.setEnabled(true);
-		phoneTxt.setEnabled(true);
+		nameTxt.setEnabled(false);
+		addressTxt.setEnabled(false);
+		phoneTxt.setEnabled(false);
 	}
 
 	public void clear() {
 		minTxt.setValue(0);
 		priceTxt.setValue(0);
 		quantityTxt.setValue(0);
-		serialTxt.setValue(0);
+		Serialtxt.setText("");
 	}
 }
