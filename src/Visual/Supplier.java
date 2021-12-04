@@ -8,8 +8,16 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import Logical.Client;
+import Logical.Provider;
+import Logical.Shop;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Supplier extends JDialog {
 
@@ -70,10 +78,24 @@ public class Supplier extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				JButton SaveSupplierBtn = new JButton("Save Supplier");
+				SaveSupplierBtn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						boolean confirmed = confirmfields();
+						if(confirmed) {
+							Provider provider = new Provider(SupliNametxt.getText(), SupliRNCtxt.getText(), SupliPhonetxt.getText(),SupliAddresstxt.getText());
+							Shop.getInstance().AddSuplier(provider);
+							JOptionPane.showMessageDialog(null, "Supplier Added Successfully");
+							CleanFields();
+
+					}else {
+						JOptionPane.showMessageDialog(null, "Please fill all the fields", "ERROR", JOptionPane.OK_OPTION);
+					}
+					}
+				});
+				SaveSupplierBtn.setActionCommand("OK");
+				buttonPane.add(SaveSupplierBtn);
+				getRootPane().setDefaultButton(SaveSupplierBtn);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
@@ -82,4 +104,22 @@ public class Supplier extends JDialog {
 			}
 		}
 	}
+	public boolean confirmfields() {
+		boolean aux = false;
+		if( !(SupliNametxt.getText().equalsIgnoreCase("")) && !(SupliRNCtxt.getText().equalsIgnoreCase("")) && !(SupliPhonetxt.getText().equalsIgnoreCase("")) && !(SupliAddresstxt.getText().equalsIgnoreCase(""))){
+			aux = true;
+		}
+		return aux;
+	}
+	
+	public void CleanFields() {
+		//pending to add sales code
+		//txtCodigoCliente.setText("C"+Biblioteca.getInstance().getGeneradorCodigoCliente());
+		SupliNametxt.setText("");
+		SupliRNCtxt.setText("");
+		SupliPhonetxt.setText("");
+		SupliAddresstxt.setText("");
+		
+	}	
+	
 }

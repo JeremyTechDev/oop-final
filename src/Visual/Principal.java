@@ -71,7 +71,7 @@ public class Principal extends JFrame {
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Products in stock");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Products product = new Products();
+				StockProducts product = new StockProducts();
 				product.setVisible(true);
 			}
 		});

@@ -5,15 +5,13 @@ public class Provider {
 	private String rnc;
 	private String phone;
 	private String address;
-	private float invoiceToPay;
 
-	public Provider(String name, String rnc, String phone, String address, float invoiceToPay) {
+	public Provider(String name, String rnc, String phone, String address) {
 		super();
 		this.name = name;
 		this.rnc = rnc;
 		this.phone = phone;
 		this.address = address;
-		this.invoiceToPay = invoiceToPay;
 	}
 
 	public String getName() {
@@ -48,12 +46,5 @@ public class Provider {
 		this.address = address;
 	}
 
-	public float getInvoiceToPay() {
-		return invoiceToPay;
-	}
-
-	public void setInvoiceToPay(float invoiceToPay) {
-		this.invoiceToPay = invoiceToPay;
-	}
 
 }

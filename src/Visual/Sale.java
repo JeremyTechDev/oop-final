@@ -26,6 +26,7 @@ import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingConstants;
 
 public class Sale extends JDialog {
 
@@ -90,8 +91,11 @@ public class Sale extends JDialog {
 		contentPanel.add(Phonetxt);
 		
 		SalesCodetxt = new JTextField();
+		SalesCodetxt.setHorizontalAlignment(SwingConstants.CENTER);
+		SalesCodetxt.setEditable(false);
 		SalesCodetxt.setColumns(10);
 		SalesCodetxt.setBounds(288, 180, 150, 25);
+		SalesCodetxt.setText(" JC - "+Shop.getInstance().getInvoices().size());
 		contentPanel.add(SalesCodetxt);
 		
 		JLabel lblSalesCode = new JLabel("Sales Code:");
@@ -186,10 +190,24 @@ public class Sale extends JDialog {
 		contentPanel.add(PrintQuotebtn);
 		
 		JButton btnConfirmSale = new JButton("CONFIRM SALE");
+		btnConfirmSale.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				clear();
+			}
+		});
 		btnConfirmSale.setBounds(483, 135, 150, 83);
 		contentPanel.add(btnConfirmSale);
 		
 		JButton CancelOrderbtn = new JButton("CANCEL ORDER");
+		CancelOrderbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int option = JOptionPane.showConfirmDialog(null, "Would you like to cancel this order?", "Confirmation",JOptionPane.WARNING_MESSAGE);
+				if (JOptionPane.YES_OPTION == option) {
+				dispose();
+			}
+			}
+		});
 		CancelOrderbtn.setBounds(657, 135, 150, 83);
 		contentPanel.add(CancelOrderbtn);
 		
@@ -198,6 +216,8 @@ public class Sale extends JDialog {
 		contentPanel.add(lblAmotToPay);
 		
 		Totaltopaytxt = new JTextField();
+		Totaltopaytxt.setText("RD$ ");
+		Totaltopaytxt.setEditable(false);
 		Totaltopaytxt.setColumns(10);
 		Totaltopaytxt.setBounds(433, 672, 96, 25);
 		contentPanel.add(Totaltopaytxt);
@@ -212,4 +232,9 @@ public class Sale extends JDialog {
 		contentPanel.add(comboBox);
 		setLocationRelativeTo(null);
 	}
+	//option to clear sale page
+	private void clear() {
+		
+		SalesCodetxt.setText(" JC - "+Shop.getInstance().getInvoices().size());
+	}	
 }

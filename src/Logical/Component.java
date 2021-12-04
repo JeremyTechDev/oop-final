@@ -7,6 +7,7 @@ public abstract class Component {
 	protected String serialNumber;
 	protected Integer minQuantity;
 	protected Provider provider;
+	private int RealProductQuantity;
 
 	public Component(float price, Integer quantity, String serialNumber, Integer minQuantity, Provider provider) {
 		super();
@@ -15,6 +16,7 @@ public abstract class Component {
 		this.serialNumber = serialNumber;
 		this.minQuantity = minQuantity;
 		this.provider = provider;
+		this.RealProductQuantity =0;
 	}
 
 	public float getPrice() {
@@ -55,6 +57,14 @@ public abstract class Component {
 
 	public void setProvider(Provider provider) {
 		this.provider = provider;
+	}
+
+	public int getRealProductQuantity() {
+		return RealProductQuantity;
+	}
+
+	public void setRealProductQuantity(int realProductQuantity) {
+		RealProductQuantity = realProductQuantity;
 	}
 
 }

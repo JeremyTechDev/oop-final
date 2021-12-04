@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Logical.Client;
+import Logical.Provider;
+import Logical.Shop;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -21,6 +24,7 @@ public class CustomerList extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 	private static DefaultTableModel model;
+	private static Object[] row;
 
 	public CustomerList() {
 		setTitle("Customer List");
@@ -45,12 +49,25 @@ public class CustomerList extends JDialog {
 			scrollPane.setViewportView(table);
 			
 			model = new DefaultTableModel();
-			String[] headers = {"Customer Name","Customer ID","Sales Code","Phone Number"};
+			String[] headers = {"Customer Name","Customer ID","Address","Phone Number","Credit Limit"};
 			model.setColumnIdentifiers(headers);
 			table.setModel(model);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			scrollPane.setViewportView(table);
 		}
-		setLocationRelativeTo(null);
+		loadTable();
+	}
+	public static void loadTable() {
+		model.setRowCount(0);
+		row = new Object[(model.getColumnCount())];
+		for (Client i: Shop.getInstance().getClients()) {
+			row[0] = i.getName();
+			row[1] = i.getId();
+			row[2] = i.getAddress();
+			row[3] = i.getPhone();
+			row[4] = i.getCreditLimit();
+
+			model.addRow(row);
+		}
 	}
 }

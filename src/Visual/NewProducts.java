@@ -66,6 +66,7 @@ public class NewProducts extends JDialog {
 		setResizable(false);
 		setModal(true);
 		setBounds(100, 100, 650, 573);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -149,7 +150,7 @@ public class NewProducts extends JDialog {
 		Motherboardbtn.setBounds(20, 50, 138, 21);
 		StockProductspanel.add(Motherboardbtn);
 
-		JLabel lblNewLabel_2_2 = new JLabel("Serial Number:");
+		JLabel lblNewLabel_2_2 = new JLabel("Product Code:");
 		lblNewLabel_2_2.setBounds(50, 378, 125, 13);
 		contentPanel.add(lblNewLabel_2_2);
 
@@ -377,7 +378,6 @@ public class NewProducts extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				String rnc = rncTxt.getText();
 				provider = Shop.getInstance().getProviderByRNC(rnc);
-
 				if (provider == null) {
 					enableEditProvider();
 				} else {
@@ -445,9 +445,10 @@ public class NewProducts extends JDialog {
 		
 		Serialtxt = new JTextField();
 		Serialtxt.setBounds(50, 401, 125, 26);
+		Serialtxt.setText("PDCT - "+Shop.getInstance().getComponents().size());
 		contentPanel.add(Serialtxt);
 		Serialtxt.setColumns(10);
-		setLocationRelativeTo(null);
+		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -464,7 +465,7 @@ public class NewProducts extends JDialog {
 							String providerRnc = rncTxt.getText();
 							String providerAddress = addressTxt.getText();
 							String providerPhone = phoneTxt.getText();
-							provider = new Provider(providerName, providerRnc, providerPhone, providerAddress, 0);
+							provider = new Provider(providerName, providerRnc, providerPhone, providerAddress);
 							// TODO: this returns false if the registration is not possible
 							Shop.getInstance().registerProvider(provider);
 						}
@@ -533,11 +534,11 @@ public class NewProducts extends JDialog {
 		addressTxt.setEnabled(false);
 		phoneTxt.setEnabled(false);
 	}
-
+	//Option to clear adding products page
 	public void clear() {
 		minTxt.setValue(0);
 		priceTxt.setValue(0);
 		quantityTxt.setValue(0);
-		Serialtxt.setText("");
+		Serialtxt.setText("PDCT - "+Shop.getInstance().getComponents().size());
 	}
 }

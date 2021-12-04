@@ -9,9 +9,9 @@ public class Shop {
 	private ArrayList<Provider> providers;
 	private ArrayList<Component> components;
 	private static Shop instance = null;
-	private int AutomaticCodeGenerator;
+	private static int ProductQuantity =0;
 	private int CustomerSalesCodeGen;
-	public int CustomerQuantity;
+
 	
 
 	private Shop() {
@@ -20,9 +20,7 @@ public class Shop {
 		this.clients = new ArrayList<Client>();
 		this.providers = new ArrayList<Provider>();
 		this.components = new ArrayList<Component>();
-		AutomaticCodeGenerator = 1000;
-		CustomerSalesCodeGen = 1;
-		CustomerQuantity =0;
+		CustomerSalesCodeGen = 10000;
 	}
 
 	public static Shop getInstance() {
@@ -40,7 +38,7 @@ public class Shop {
 		}
 		return null;
 	}
-	//Find customer fuction
+	//Find customer function
 	public Client FindCustomerByID(String id) {
 		Client client = null;
 		boolean found = false;
@@ -90,14 +88,6 @@ public class Shop {
 		return isSaved;
 	}
 
-	public int getAutomaticCodeGenerator() {
-		return AutomaticCodeGenerator;
-	}
-
-	public void setAutomaticCodeGenerator(int automaticCodeGenerator) {
-		AutomaticCodeGenerator = automaticCodeGenerator;
-	}
-
 	public ArrayList<Component> getComponents() {
 		return components;
 	}
@@ -130,18 +120,15 @@ public class Shop {
 		this.clients = clients;
 	}
 	
-	public int getCustomerQuantity() {
-		return CustomerQuantity;
-	}
-
-	public void setCustomerQuantity(int customerQuantity) {
-		CustomerQuantity = customerQuantity;
-	}
 
 	public void AddCustomer(Client client) {
 		clients.add(client);
 		CustomerSalesCodeGen++;
 	
+	}
+
+	public void AddSuplier(Provider provider) {
+		providers.add(provider);
 	}
 
 }

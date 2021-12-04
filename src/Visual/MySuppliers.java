@@ -47,7 +47,7 @@ public class MySuppliers extends JDialog {
 					scrollPane.setViewportView(table);
 
 					model = new DefaultTableModel();
-					String[] headers = { "Supplier Name", "Supplier RNC", "Phone Number", "Address", "Debs to Pay" };
+					String[] headers = { "Supplier Name", "Supplier RNC", "Phone Number", "Address"};
 					model.setColumnIdentifiers(headers);
 					table.setModel(model);
 					table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -62,16 +62,11 @@ public class MySuppliers extends JDialog {
 	public static void loadTable() {
 		model.setRowCount(0);
 		row = new Object[(model.getColumnCount())];
-
-		Provider provider = null;
-		for (int i = 0; i < Shop.getInstance().getProviders().size(); i++) {
-			provider = Shop.getInstance().getProviders().get(i);
-
-			row[0] = provider.getName();
-			row[1] = provider.getRnc();
-			row[2] = provider.getPhone();
-			row[3] = provider.getAddress();
-			row[4] = provider.getInvoiceToPay();
+		for (Provider i: Shop.getInstance().getProviders()) {
+			row[0] = i.getName();
+			row[1] = i.getRnc();
+			row[2] = i.getPhone();
+			row[3] = i.getAddress();
 
 			model.addRow(row);
 		}
