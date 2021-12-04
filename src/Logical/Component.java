@@ -1,6 +1,9 @@
 package Logical;
 
-public abstract class Component {
+import java.io.Serializable;
+
+public abstract class Component implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	protected float price;
 	protected Integer quantity;
@@ -16,7 +19,7 @@ public abstract class Component {
 		this.serialNumber = serialNumber;
 		this.minQuantity = minQuantity;
 		this.provider = provider;
-		this.RealProductQuantity =0;
+		this.RealProductQuantity = 0;
 	}
 
 	public float getPrice() {

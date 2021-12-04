@@ -1,21 +1,28 @@
 package Logical;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private String id;
 	private String name;
 	private String address;
 	private String phone;
-	private String login;
 	private String username;
 	private String password;
+	private boolean isAdmin;
 
-	public User(String name, String address, String phone, String login, String username, String password) {
+	public User(String id, String name, String address, String phone, String username, String password,
+			boolean isAdmin) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.phone = phone;
-		this.login = login;
 		this.username = username;
 		this.password = password;
+		this.isAdmin = isAdmin;
 	}
 
 	public String getName() {
@@ -42,12 +49,12 @@ public class User {
 		this.phone = phone;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getId() {
+		return id;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -64,6 +71,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 }

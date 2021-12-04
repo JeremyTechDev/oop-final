@@ -1,8 +1,11 @@
 package Logical;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private String code;
 	private Date date;
 	private String state;

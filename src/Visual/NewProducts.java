@@ -530,9 +530,9 @@ public class NewProducts extends JDialog {
 	}
 
 	public void enableEditProvider() {
-		nameTxt.setEnabled(false);
-		addressTxt.setEnabled(false);
-		phoneTxt.setEnabled(false);
+		nameTxt.setEnabled(true);
+		addressTxt.setEnabled(true);
+		phoneTxt.setEnabled(true);
 	}
 	//Option to clear adding products page
 	public void clear() {

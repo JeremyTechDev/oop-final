@@ -1,5 +1,11 @@
 package Visual;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -7,6 +13,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Logical.Shop;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -33,6 +42,24 @@ public class Principal extends JFrame {
 
 	
 	public Principal() {
+		
+		// Save Shop Instance before closing
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					FileOutputStream shopFile = new FileOutputStream(Shop.shopFilename);
+					ObjectOutputStream write = new ObjectOutputStream(shopFile);
+					write.writeObject(Shop.getInstance());
+					write.close();
+					shopFile.close();
+				} catch(FileNotFoundException err) {
+					err.printStackTrace();
+				} catch(IOException err) {
+					err.printStackTrace();
+				}
+			}
+		});
 		
 		dim = getToolkit().getScreenSize();
 		setResizable(false);
@@ -121,15 +148,6 @@ public class Principal extends JFrame {
 		
 		JMenu mnNewMenu_4 = new JMenu("Supplier");
 		menuBar.add(mnNewMenu_4);
-		
-		JMenuItem mntmNewMenuItem_8 = new JMenuItem("New Supplier");
-		mntmNewMenuItem_8.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Supplier supli = new Supplier();
-				supli.setVisible(true);
-			}
-		});
-		mnNewMenu_4.add(mntmNewMenuItem_8);
 		
 		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Suppliers");
 		mntmNewMenuItem_9.addActionListener(new ActionListener() {

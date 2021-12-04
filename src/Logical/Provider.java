@@ -1,6 +1,10 @@
 package Logical;
 
-public class Provider {
+import java.io.Serializable;
+
+public class Provider implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private String name;
 	private String rnc;
 	private String phone;
@@ -45,6 +49,5 @@ public class Provider {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
 
 }
