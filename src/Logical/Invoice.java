@@ -9,19 +9,19 @@ public class Invoice implements Serializable {
 	private String code;
 	private float totalPrice;
 	private User seller;
-	private ArrayList<Combo> combos;
+//	private ArrayList<Combo> combos;
 	private ArrayList<Component> components;
 	private Client client;
 	private String paymentType;
 	private boolean isPayed;
 
-	public Invoice(String code, float totalPrice, User seller, ArrayList<Combo> combos, ArrayList<Component> components,
+	public Invoice(String code, float totalPrice, User seller, ArrayList<Component> components,
 			Client client, String paymentType, boolean isPayed) {
 		super();
 		this.code = code;
 		this.totalPrice = totalPrice;
 		this.seller = seller;
-		this.combos = combos;
+		//this.combos = combos;
 		this.components = components;
 		this.client = client;
 		this.paymentType = paymentType;
@@ -51,7 +51,7 @@ public class Invoice implements Serializable {
 	public void setSeller(User seller) {
 		this.seller = seller;
 	}
-
+/*
 	public ArrayList<Combo> getCombos() {
 		return combos;
 	}
@@ -59,7 +59,7 @@ public class Invoice implements Serializable {
 	public void setCombos(ArrayList<Combo> combos) {
 		this.combos = combos;
 	}
-
+*/
 	public ArrayList<Component> getComponents() {
 		return components;
 	}

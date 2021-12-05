@@ -4,15 +4,15 @@ public class Motherboard extends Component {
 	private String brand;
 	private String model;
 	private String connectorType;
-	private String String;
+	private String ramtype;
 
 	public Motherboard(float price, Integer quantity, String serialNumber, Integer minQuantity, Provider provider,
-			String brand, String model, String connectorType, String String) {
+			String brand, String model, String connectorType, String ramtype) {
 		super(price, quantity, serialNumber, minQuantity, provider);
 		this.brand = brand;
 		this.model = model;
 		this.connectorType = connectorType;
-		this.String = String;
+		this.ramtype = ramtype;
 	}
 
 	public String getBrand() {
@@ -39,12 +39,12 @@ public class Motherboard extends Component {
 		this.connectorType = connectorType;
 	}
 
-	public String getString() {
-		return String;
+	public String getRamtype() {
+		return ramtype;
 	}
 
-	public void setString(String String) {
-		this.String = String;
+	public void setRamtype(String ramtype) {
+		this.ramtype = ramtype;
 	}
 
 }

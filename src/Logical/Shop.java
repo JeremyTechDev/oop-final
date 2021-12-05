@@ -62,6 +62,69 @@ public class Shop implements Serializable {
 	public void addUser(User adminUser) {
 		this.users.add(adminUser);
 	}
+	//option to add product to cart
+	public Component loadCart(String serialNumber) {
+		Component product = getComponentBySerial(serialNumber);
+		Component cartload=null;
+		
+		if(product instanceof Motherboard) {
+			Motherboard motherboard = new Motherboard(0,0,null,0,null,null,null,null,null);
+			motherboard.setQuantity(product.getQuantity());
+			motherboard.setMinQuantity(product.getMinQuantity());
+			motherboard.setSerialNumber(product.getSerialNumber());
+			motherboard.setPrice(product.getPrice());
+			motherboard.setBrand(((Motherboard) product).getBrand());
+			motherboard.setModel(((Motherboard) product).getModel());
+			motherboard.setConnectorType(((Motherboard) product).getConnectorType());
+			motherboard.setRamtype(((Motherboard) product).getRamtype());
+			
+			cartload=motherboard;
+		}else {
+			if(product instanceof Microprocessor) {
+				Microprocessor microprocessor = new Microprocessor(0,0,null,0,null,null,null,null,null);
+				microprocessor.setQuantity(product.getQuantity());
+				microprocessor.setMinQuantity(product.getMinQuantity());
+				microprocessor.setSerialNumber(product.getSerialNumber());
+				microprocessor.setPrice(product.getPrice());
+				microprocessor.setBrand(((Microprocessor) product).getBrand());
+				microprocessor.setModel(((Microprocessor) product).getModel());
+				microprocessor.setConnectorType(((Microprocessor) product).getConnectorType());
+				microprocessor.setSpeed(((Microprocessor) product).getSpeed());
+				
+				cartload=microprocessor;
+			}else {
+				if(product instanceof HardDisk) {
+					HardDisk storagedisk = new HardDisk(0,0,null,0,null,null,null,null,null);
+					storagedisk.setQuantity(product.getQuantity());
+					storagedisk.setMinQuantity(product.getMinQuantity());
+					storagedisk.setSerialNumber(product.getSerialNumber());
+					storagedisk.setPrice(product.getPrice());
+					storagedisk.setBrand(((Microprocessor) product).getBrand());
+					storagedisk.setModel(((Microprocessor) product).getModel());
+					storagedisk.setCapacity(((HardDisk) product).getCapacity());
+					storagedisk.setConnectionType(((HardDisk) product).getConnectionType());
+					
+					cartload=storagedisk;
+				}else {
+					if(product instanceof RamCard) {
+						RamCard memoryram = new RamCard(0,0,null,0,null,null,null,null);
+						memoryram.setQuantity(product.getQuantity());
+						memoryram.setMinQuantity(product.getMinQuantity());
+						memoryram.setSerialNumber(product.getSerialNumber());
+						memoryram.setPrice(product.getPrice());
+						memoryram.setBrand(((Microprocessor) product).getBrand());
+						memoryram.setCapacity(((RamCard) product).getCapacity());
+						memoryram.setType(((RamCard) product).getType());
+						
+						cartload=memoryram;
+					}
+				}
+			}
+		}
+		return cartload;
+		
+	}
+	
 
 	// Find customer function
 	public Client FindCustomerByID(String id) {
@@ -78,6 +141,16 @@ public class Shop implements Serializable {
 			IndexFinder++;
 		}
 		return client;
+	}
+	
+	//VerifyProducts
+	public boolean VerifyProduct(String code) {
+		for(Component i: components) {
+			if(i.getSerialNumber().equalsIgnoreCase(code)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// Find ComponentbySerial Number

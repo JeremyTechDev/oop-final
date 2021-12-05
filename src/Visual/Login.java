@@ -60,7 +60,7 @@ public class Login extends JDialog {
 						ObjectOutputStream write = new ObjectOutputStream(shop);
 
 						// Add default admin
-						User defaultAdmin = new User("0", "Admin", "-", "-", "admin", "123", true);
+						User defaultAdmin = new User("0000", "Admin", "-", "-", "Admin", "123", true);
 						Shop.getInstance().addUser(defaultAdmin);
 
 						write.writeObject(Shop.getInstance());
@@ -97,7 +97,8 @@ public class Login extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Login");
 		setResizable(false);
-		setBounds(100, 100, 246, 247);
+		setBounds(100, 100, 246, 260);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -106,7 +107,7 @@ public class Login extends JDialog {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(39, 46, 173, 142);
+		panel.setBounds(39, 46, 173, 152);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 
@@ -134,7 +135,6 @@ public class Login extends JDialog {
 				String username = usernameTxt.getText();
 				String password = String.valueOf(passwordTxt.getPassword());
 				if (Shop.getInstance().handleLogin(username, password)) {
-
 					dispose();
 					Principal main = new Principal();
 					main.setVisible(true);

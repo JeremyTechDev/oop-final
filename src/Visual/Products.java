@@ -19,26 +19,46 @@ import Logical.Shop;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Products extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 	private static DefaultTableModel model;
+	public static String productcode = null;
+	private static boolean productstatus = false;
 	private static Object[] row;
 	private JTextField Serialtxt;
+	private JSpinner SpnQuantity;
+	private JButton AddToCartbtn;
+	
+	Component showDialog() {
+		setVisible(true);
+		Component product = null;
+		if(productcode !=null) {
+			product = Shop.getInstance().loadCart(productcode);
+			product.setQuantity((int) SpnQuantity.getValue());
+		}
+		return product;
+	}
 
 	public Products() {
 		setTitle("Products");
 		setResizable(false);
 		setModal(true);
-		setBounds(100, 100, 788, 506);
+		setBounds(100, 100, 788, 563);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -56,6 +76,21 @@ public class Products extends JDialog {
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int add = -1;
+				add = table.getSelectedRow();
+				productcode = table.getValueAt(add, 0).toString();
+				
+				if(Shop.getInstance().getComponentBySerial(productcode).getQuantity()==0 && productstatus==true) {
+					AddToCartbtn.setEnabled(false);
+				}else {
+					AddToCartbtn.setEnabled(true);
+				}
+				add();
+			}
+		});
 		table.setColumnSelectionAllowed(true);
 		scrollPane.setViewportView(table);
 		setLocationRelativeTo(null);
@@ -76,21 +111,45 @@ public class Products extends JDialog {
 		JLabel lblNewLabel = new JLabel("Serial Number:");
 		lblNewLabel.setBounds(20, 25, 85, 19);
 		contentPanel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Quantity:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(537, 444, 85, 24);
+		contentPanel.add(lblNewLabel_1);
+		
+		SpnQuantity = new JSpinner();
+		SpnQuantity.setEnabled(false);
+		SpnQuantity.setBounds(610, 445, 144, 24);
+		contentPanel.add(SpnQuantity);
+		
+		JButton Findbtn = new JButton("Find");
+		Findbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Shop.getInstance().VerifyProduct(Serialtxt.getText())) {
+					loadTable(true);
+					}else {
+						AddToCartbtn.setEnabled(false);
+						JOptionPane.showMessageDialog(null, "Error: The code '"+Serialtxt.getText()+" was not found.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+					}
+			}
+		});
+		Findbtn.setBounds(275, 24, 85, 21);
+		contentPanel.add(Findbtn);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
+				AddToCartbtn = new JButton("Add to Cart");
+				AddToCartbtn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();
 					}
 				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				AddToCartbtn.setActionCommand("OK");
+				buttonPane.add(AddToCartbtn);
+				getRootPane().setDefaultButton(AddToCartbtn);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
@@ -132,4 +191,20 @@ public class Products extends JDialog {
 	}
 }
 	}
+	
+	private void add() {
+		// TODO Auto-generated method stub
+		if(productcode !=null) {
+			SpnQuantity.setEnabled(true);
+			if(productstatus) {
+				if(Shop.getInstance().getComponentBySerial(productcode).getQuantity() > 0) {
+				SpnQuantity.setModel(new SpinnerNumberModel(null, 1, Shop.getInstance().getComponentBySerial(productcode).getQuantity(), 1));
+				}else {
+					SpnQuantity.setModel(new SpinnerNumberModel(0, 0, 0,1));	
+				}
+			}
+		}
+		
+	}
 }
+
