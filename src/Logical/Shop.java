@@ -11,10 +11,11 @@ public class Shop implements Serializable {
 	private ArrayList<Provider> providers;
 	private ArrayList<Component> components;
 	private ArrayList<User> users;
-	private static User loggedUser = null;
+	private User loggedUser = null;
 	private static Shop instance = null;
 	private static int ProductQuantity = 0;
 	private int CustomerSalesCodeGen;
+	private int lastUserId = 1;
 
 	public final static String shopFilename = "shop.dat";
 
@@ -59,16 +60,22 @@ public class Shop implements Serializable {
 		return false;
 	}
 
-	public void addUser(User adminUser) {
-		this.users.add(adminUser);
+	public boolean addUser(User user) {
+		boolean isSaved = this.users.add(user);
+		if (isSaved) {
+			this.lastUserId++;
+		}
+
+		return isSaved;
 	}
-	//option to add product to cart
+
+	// option to add product to cart
 	public Component loadCart(String serialNumber) {
 		Component product = getComponentBySerial(serialNumber);
-		Component cartload=null;
-		
-		if(product instanceof Motherboard) {
-			Motherboard motherboard = new Motherboard(0,0,null,0,null,null,null,null,null);
+		Component cartload = null;
+
+		if (product instanceof Motherboard) {
+			Motherboard motherboard = new Motherboard(0, 0, null, 0, null, null, null, null, null);
 			motherboard.setQuantity(product.getQuantity());
 			motherboard.setMinQuantity(product.getMinQuantity());
 			motherboard.setSerialNumber(product.getSerialNumber());
@@ -77,11 +84,11 @@ public class Shop implements Serializable {
 			motherboard.setModel(((Motherboard) product).getModel());
 			motherboard.setConnectorType(((Motherboard) product).getConnectorType());
 			motherboard.setRamtype(((Motherboard) product).getRamtype());
-			
-			cartload=motherboard;
-		}else {
-			if(product instanceof Microprocessor) {
-				Microprocessor microprocessor = new Microprocessor(0,0,null,0,null,null,null,null,null);
+
+			cartload = motherboard;
+		} else {
+			if (product instanceof Microprocessor) {
+				Microprocessor microprocessor = new Microprocessor(0, 0, null, 0, null, null, null, null, null);
 				microprocessor.setQuantity(product.getQuantity());
 				microprocessor.setMinQuantity(product.getMinQuantity());
 				microprocessor.setSerialNumber(product.getSerialNumber());
@@ -90,11 +97,11 @@ public class Shop implements Serializable {
 				microprocessor.setModel(((Microprocessor) product).getModel());
 				microprocessor.setConnectorType(((Microprocessor) product).getConnectorType());
 				microprocessor.setSpeed(((Microprocessor) product).getSpeed());
-				
-				cartload=microprocessor;
-			}else {
-				if(product instanceof HardDisk) {
-					HardDisk storagedisk = new HardDisk(0,0,null,0,null,null,null,null,null);
+
+				cartload = microprocessor;
+			} else {
+				if (product instanceof HardDisk) {
+					HardDisk storagedisk = new HardDisk(0, 0, null, 0, null, null, null, null, null);
 					storagedisk.setQuantity(product.getQuantity());
 					storagedisk.setMinQuantity(product.getMinQuantity());
 					storagedisk.setSerialNumber(product.getSerialNumber());
@@ -103,11 +110,11 @@ public class Shop implements Serializable {
 					storagedisk.setModel(((Microprocessor) product).getModel());
 					storagedisk.setCapacity(((HardDisk) product).getCapacity());
 					storagedisk.setConnectionType(((HardDisk) product).getConnectionType());
-					
-					cartload=storagedisk;
-				}else {
-					if(product instanceof RamCard) {
-						RamCard memoryram = new RamCard(0,0,null,0,null,null,null,null);
+
+					cartload = storagedisk;
+				} else {
+					if (product instanceof RamCard) {
+						RamCard memoryram = new RamCard(0, 0, null, 0, null, null, null, null);
 						memoryram.setQuantity(product.getQuantity());
 						memoryram.setMinQuantity(product.getMinQuantity());
 						memoryram.setSerialNumber(product.getSerialNumber());
@@ -115,16 +122,15 @@ public class Shop implements Serializable {
 						memoryram.setBrand(((Microprocessor) product).getBrand());
 						memoryram.setCapacity(((RamCard) product).getCapacity());
 						memoryram.setType(((RamCard) product).getType());
-						
-						cartload=memoryram;
+
+						cartload = memoryram;
 					}
 				}
 			}
 		}
 		return cartload;
-		
+
 	}
-	
 
 	// Find customer function
 	public Client FindCustomerByID(String id) {
@@ -142,11 +148,11 @@ public class Shop implements Serializable {
 		}
 		return client;
 	}
-	
-	//VerifyProducts
+
+	// VerifyProducts
 	public boolean VerifyProduct(String code) {
-		for(Component i: components) {
-			if(i.getSerialNumber().equalsIgnoreCase(code)) {
+		for (Component i : components) {
+			if (i.getSerialNumber().equalsIgnoreCase(code)) {
 				return true;
 			}
 		}
@@ -185,7 +191,15 @@ public class Shop implements Serializable {
 		return isSaved;
 	}
 
-	public static User getLoggedUser() {
+	public int getLastUserId() {
+		return lastUserId;
+	}
+
+	public void setLastUserId(int lastUserId) {
+		this.lastUserId = lastUserId;
+	}
+
+	public User getLoggedUser() {
 		return loggedUser;
 	}
 

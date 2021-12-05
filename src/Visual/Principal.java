@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -26,7 +27,8 @@ public class Principal extends JFrame {
 
 	private JPanel contentPane;
 	private Dimension dim;
-	
+	private boolean isAdminUser = Shop.getInstance().getLoggedUser().getIsAdmin();
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -40,9 +42,8 @@ public class Principal extends JFrame {
 		});
 	}
 
-	
 	public Principal() {
-		
+
 		// Save Shop Instance before closing
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -53,27 +54,27 @@ public class Principal extends JFrame {
 					write.writeObject(Shop.getInstance());
 					write.close();
 					shopFile.close();
-				} catch(FileNotFoundException err) {
+				} catch (FileNotFoundException err) {
 					err.printStackTrace();
-				} catch(IOException err) {
+				} catch (IOException err) {
 					err.printStackTrace();
 				}
 			}
 		});
-		
+
 		dim = getToolkit().getScreenSize();
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 637, 394);
-		setSize(dim.width, dim.height-45);
+		setSize(dim.width, dim.height - 45);
 		setLocationRelativeTo(null);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnNewMenu = new JMenu("Sale");
 		menuBar.add(mnNewMenu);
-		
+
 		JMenuItem mntmNewMenuItem = new JMenuItem("New Sale");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -82,10 +83,10 @@ public class Principal extends JFrame {
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
-		
+
 		JMenu mnNewMenu_1 = new JMenu("Products");
 		menuBar.add(mnNewMenu_1);
-		
+
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Add New Products");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -93,8 +94,9 @@ public class Principal extends JFrame {
 				newpro.setVisible(true);
 			}
 		});
+		mnNewMenu_1.setEnabled(isAdminUser);
 		mnNewMenu_1.add(mntmNewMenuItem_3);
-		
+
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Products in stock");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -103,10 +105,10 @@ public class Principal extends JFrame {
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_1);
-		
+
 		JMenu mnNewMenu_3 = new JMenu("Customers");
 		menuBar.add(mnNewMenu_3);
-		
+
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Customer List");
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -114,7 +116,7 @@ public class Principal extends JFrame {
 				custlist.setVisible(true);
 			}
 		});
-		
+
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("New Customer");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -122,9 +124,10 @@ public class Principal extends JFrame {
 				newcustomer.setVisible(true);
 			}
 		});
+		mntmNewMenuItem_2.setEnabled(isAdminUser);
 		mnNewMenu_3.add(mntmNewMenuItem_2);
 		mnNewMenu_3.add(mntmNewMenuItem_6);
-		
+
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Quotations");
 		mntmNewMenuItem_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -133,10 +136,11 @@ public class Principal extends JFrame {
 			}
 		});
 		mnNewMenu_3.add(mntmNewMenuItem_7);
-		
+		mntmNewMenuItem_7.setEnabled(isAdminUser);
+
 		JMenu mnNewMenu_2 = new JMenu("Invoices");
 		menuBar.add(mnNewMenu_2);
-		
+
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Sale History");
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -145,10 +149,10 @@ public class Principal extends JFrame {
 			}
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_4);
-		
+
 		JMenu mnNewMenu_4 = new JMenu("Supplier");
 		menuBar.add(mnNewMenu_4);
-		
+
 		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Suppliers");
 		mntmNewMenuItem_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -157,13 +161,28 @@ public class Principal extends JFrame {
 			}
 		});
 		mnNewMenu_4.add(mntmNewMenuItem_9);
-		
+
+		JMenu mnNewMenu_6 = new JMenu("Admin");
+		mnNewMenu_6.setEnabled(isAdminUser);
+		menuBar.add(mnNewMenu_6);
+
+		JMenuItem mntmNewMenuItem_8 = new JMenuItem("New User");
+		mntmNewMenuItem_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewUser newUser = new NewUser();
+				newUser.setVisible(true);
+			}
+		});
+		mntmNewMenuItem_8.setEnabled(isAdminUser);
+		mnNewMenu_6.add(mntmNewMenuItem_8);
+
 		JMenu mnNewMenu_5 = new JMenu("Backup");
 		menuBar.add(mnNewMenu_5);
-		
+		mnNewMenu_5.setEnabled(isAdminUser);
+
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Backup File");
 		mnNewMenu_5.add(mntmNewMenuItem_5);
-		
+
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Load File");
 		mnNewMenu_5.add(mntmNewMenuItem_10);
 		contentPane = new JPanel();
