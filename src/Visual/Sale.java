@@ -10,6 +10,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Logical.Client;
+import Logical.Component;
+import Logical.HardDisk;
+import Logical.Microprocessor;
+import Logical.Motherboard;
+import Logical.RamCard;
 import Logical.Shop;
 
 import javax.swing.JLabel;
@@ -18,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JSpinner;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -27,6 +33,8 @@ import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Sale extends JDialog {
 
@@ -39,12 +47,20 @@ public class Sale extends JDialog {
 	private JTextField ProductCodetxt;
 	private JTable table;
 	private static DefaultTableModel model;
+	private static Object[] rowProduct;
 	private static int type;
+	public static ArrayList<Component> addtocart = null;
+	private static Component selected = null;
 	
 	private Client client = null;
-	private JTextField Totaltopaytxt;
+	private static JTextField Totaltopaytxt;
+	private JButton Removecartbtn;
+	private static JButton Accionbtn;
 
 	public Sale() {
+		
+		addtocart = new ArrayList<>();
+		
 		setTitle("Sale");
 		setModal(true);
 		setResizable(false);
@@ -153,6 +169,17 @@ public class Sale extends JDialog {
 		panel_1.add(scrollPane, BorderLayout.CENTER);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int select = -1;
+				if(table.isEnabled()) {
+					select = table.getSelectedRow();
+					selected = Shop.getInstance().getComponentBySerial(table.getValueAt(select, 0).toString());
+					Removecartbtn.setEnabled(true);
+				}
+			}
+		});
 		table.setColumnSelectionAllowed(true);
 		scrollPane.setViewportView(table);
 		
@@ -166,14 +193,18 @@ public class Sale extends JDialog {
 		JButton FindProductsbtn = new JButton("Product List");
 		FindProductsbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Products openlist = new Products();
-				openlist.setVisible(true);
+				Products productlist = new Products(false);
+				 Component component = productlist.showDialog();
+				 if(component !=null) {
+					 addtocart.add(component);
+					 LoadCart();
+				 }
 			}
 		});
 		FindProductsbtn.setBounds(188, 62, 120, 21);
 		panel.add(FindProductsbtn);
 		
-		JButton Removecartbtn = new JButton("Remove");
+		Removecartbtn = new JButton("Remove");
 		Removecartbtn.setBounds(188, 92, 120, 21);
 		panel.add(Removecartbtn);
 		
@@ -231,7 +262,33 @@ public class Sale extends JDialog {
 		comboBox.setBounds(657, 672, 150, 25);
 		contentPanel.add(comboBox);
 		setLocationRelativeTo(null);
+		
 	}
+	//Add to cart Option // Still missing some adjustments like add the entire description
+	public static void LoadCart() {
+		// TODO Auto-generated method stub
+		rowProduct  = new Object[model.getColumnCount()];
+		Accionbtn = new JButton("");
+		float TotalAmount = (float) 0.00;
+		model.setRowCount(0);
+		if(addtocart.size()!=0) {
+			Accionbtn.setEnabled(true);
+			for(Component i: addtocart) {
+				rowProduct[0] = i.getSerialNumber();
+				if(i instanceof Motherboard) {
+					rowProduct[1]= ((Motherboard)i).getBrand()+"-"+((Motherboard)i).getModel()+"-"+((Motherboard)i).getConnectorType()+"-"+((Motherboard)i).getRamtype();
+				}
+					
+							rowProduct[2] = i.getPrice();
+							rowProduct[3] = i.getQuantity();
+							rowProduct[4] = "RD$ "+i.getQuantity()*i.getPrice();
+							TotalAmount+=i.getQuantity()*i.getPrice();
+							model.addRow(rowProduct);
+					}
+				}
+						Totaltopaytxt.setText("RD$ "+TotalAmount);
+	}
+
 	//option to clear sale page
 	private void clear() {
 		

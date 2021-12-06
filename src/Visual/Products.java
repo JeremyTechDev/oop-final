@@ -54,7 +54,10 @@ public class Products extends JDialog {
 		return product;
 	}
 
-	public Products() {
+	public Products(boolean condition) {
+		
+		productstatus = condition;
+		
 		setTitle("Products");
 		setResizable(false);
 		setModal(true);
@@ -79,16 +82,16 @@ public class Products extends JDialog {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int add = -1;
-				add = table.getSelectedRow();
-				productcode = table.getValueAt(add, 0).toString();
+				int select = -1;
+				select = table.getSelectedRow();
+				productcode = table.getValueAt(select, 0).toString();
 				
 				if(Shop.getInstance().getComponentBySerial(productcode).getQuantity()==0 && productstatus==true) {
 					AddToCartbtn.setEnabled(false);
 				}else {
 					AddToCartbtn.setEnabled(true);
 				}
-				add();
+				Add();
 			}
 		});
 		table.setColumnSelectionAllowed(true);
@@ -192,7 +195,7 @@ public class Products extends JDialog {
 }
 	}
 	
-	private void add() {
+	private void Add() {
 		// TODO Auto-generated method stub
 		if(productcode !=null) {
 			SpnQuantity.setEnabled(true);

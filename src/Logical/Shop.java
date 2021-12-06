@@ -11,7 +11,7 @@ public class Shop implements Serializable {
 	private ArrayList<Provider> providers;
 	private ArrayList<Component> components;
 	private ArrayList<User> users;
-	private User loggedUser = null;
+	private static User loggedUser = null;
 	private static Shop instance = null;
 	private static int ProductQuantity = 0;
 	private int CustomerSalesCodeGen;
