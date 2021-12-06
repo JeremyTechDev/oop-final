@@ -1,7 +1,13 @@
 package Visual;
 
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,9 +35,26 @@ public class Principal extends JFrame {
 	private Dimension dim;
 	private boolean isAdminUser = Shop.getInstance().getLoggedUser().getIsAdmin();
 
+	private static Socket sfd = null;
+	private static DataOutputStream outputStream;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+
+				System.out.println("ijaa");
+
+				try {
+					sfd = new Socket("192.168.0.1", 8080);
+					outputStream = new DataOutputStream(new BufferedOutputStream(sfd.getOutputStream()));
+					System.out.println("Client: config done");
+				} catch (UnknownHostException uhe) {
+					System.out.println("Cound not connect to the host");
+				} catch (IOException ioe) {
+					System.out.println("Connection rejected");
+					System.exit(1);
+				}
+
 				try {
 					Principal frame = new Principal();
 					frame.setVisible(true);
@@ -181,6 +204,21 @@ public class Principal extends JFrame {
 		mnNewMenu_5.setEnabled(isAdminUser);
 
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Backup File");
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				String message = "Hello World!";
+
+				try {
+					System.out.println(message);
+					outputStream.writeUTF(message);
+					outputStream.flush();
+				} catch (IOException ioe) {
+					System.out.println("Error: " + ioe);
+				}
+
+			}
+		});
 		mnNewMenu_5.add(mntmNewMenuItem_5);
 
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Load File");
