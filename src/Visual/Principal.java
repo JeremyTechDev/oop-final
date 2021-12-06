@@ -8,10 +8,15 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -26,6 +31,8 @@ import Logical.Shop;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -35,26 +42,9 @@ public class Principal extends JFrame {
 	private Dimension dim;
 	private boolean isAdminUser = Shop.getInstance().getLoggedUser().getIsAdmin();
 
-	private static Socket sfd = null;
-	private static DataOutputStream outputStream;
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-
-				System.out.println("ijaa");
-
-				try {
-					sfd = new Socket("192.168.0.1", 8080);
-					outputStream = new DataOutputStream(new BufferedOutputStream(sfd.getOutputStream()));
-					System.out.println("Client: config done");
-				} catch (UnknownHostException uhe) {
-					System.out.println("Cound not connect to the host");
-				} catch (IOException ioe) {
-					System.out.println("Connection rejected");
-					System.exit(1);
-				}
-
 				try {
 					Principal frame = new Principal();
 					frame.setVisible(true);
@@ -206,26 +196,50 @@ public class Principal extends JFrame {
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Backup File");
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				String message = "Hello World!";
+				Socket socket = null;
+				File shopFile = null;
+				InputStream in = null;
+				OutputStream out = null;
 
 				try {
-					System.out.println(message);
-					outputStream.writeUTF(message);
-					outputStream.flush();
+					socket = new Socket("127.0.0.1", 7777);
+					shopFile = new File(Shop.shopFilename);
+					in = new FileInputStream(shopFile);
+					out = socket.getOutputStream();
+				} catch (FileNotFoundException err) {
+					JOptionPane.showMessageDialog(null, "No shop data to backup", "Backup failed",
+							JOptionPane.ERROR_MESSAGE);
+				} catch (UnknownHostException uhe) {
+					JOptionPane.showMessageDialog(null, "Could not create a backup file", "Backup failed",
+							JOptionPane.ERROR_MESSAGE);
 				} catch (IOException ioe) {
-					System.out.println("Error: " + ioe);
+					ioe.printStackTrace();
 				}
 
+				try {
+					int count;
+					byte[] bytes = new byte[8192];
+					while ((count = in.read(bytes)) > 0) {
+						out.write(bytes, 0, count);
+					}
+
+					out.close();
+					in.close();
+					socket.close();
+
+					JOptionPane.showMessageDialog(null, "Backup file created in the backups folder", "Backup Done!",
+							JOptionPane.INFORMATION_MESSAGE);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		mnNewMenu_5.add(mntmNewMenuItem_5);
 
-		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Load File");
-		mnNewMenu_5.add(mntmNewMenuItem_10);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
+
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
 	}
