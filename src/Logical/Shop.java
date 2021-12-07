@@ -77,7 +77,7 @@ public class Shop implements Serializable {
 		Component cartload = null;
 
 		if (product instanceof Motherboard) {
-			Motherboard motherboard = new Motherboard(0, 0, null, 0, null, null, null, null, null);
+			Motherboard motherboard = new Motherboard(0, 0, null, null, null, null, null, null, null);
 			motherboard.setQuantity(product.getQuantity());
 			motherboard.setMinQuantity(product.getMinQuantity());
 			motherboard.setSerialNumber(product.getSerialNumber());

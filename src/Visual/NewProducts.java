@@ -487,7 +487,7 @@ public class NewProducts extends JDialog {
 							String model = MBModelcbx.getSelectedItem().toString();
 							String connectionType = MBConectionTypecbx.getSelectedItem().toString();
 							String ramType = MBRamTypecbx.getSelectedItem().toString();
-							newComponent = new Motherboard(price, quantity, serial, minimun, provider, brand, model,
+							newComponent = new Motherboard(price, quantity,serial, minimun, provider, brand, model,
 									connectionType, ramType);
 						} else if (StorageDiskbtn.isSelected()) {
 							String brand = SDManufacturercbx.getSelectedItem().toString();

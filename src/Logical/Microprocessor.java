@@ -8,7 +8,7 @@ public class Microprocessor extends Component {
 
 	public Microprocessor(float price, Integer quantity, String serialNumber, Integer minQuantity, Provider provider,
 			String brand, String model, String connectorType, String speed) {
-		super(price, quantity, minQuantity, provider);
+		super(price, quantity,serialNumber, minQuantity, provider);
 		this.brand = brand;
 		this.model = model;
 		this.connectorType = connectorType;

@@ -39,6 +39,7 @@ public class Products extends JDialog {
 	private static DefaultTableModel model;
 	public static String productcode = null;
 	private static boolean productstatus = false;
+	private static boolean productstatusonly = false;
 	private static Object[] row;
 	private JTextField Serialtxt;
 	private JSpinner SpnQuantity;
@@ -159,7 +160,7 @@ public class Products extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
-		loadTable(true);
+		loadTable(condition);
 	}
 	//LoadProduct table
 	public void loadTable(boolean finder) {

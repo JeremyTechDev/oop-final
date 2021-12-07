@@ -8,11 +8,11 @@ public abstract class Component {
 	protected Integer minQuantity;
 	protected Provider provider;
 
-	public Component(float price, Integer quantity, Integer minQuantity, Provider provider) {
+	public Component(float price, Integer quantity,String serialNumber, Integer minQuantity, Provider provider) {
 		super();
 		this.price = price;
 		this.quantity = quantity;
-		this.serialNumber = "PDCT - "+Shop.getInstance().getComponents().size();
+		this.serialNumber = serialNumber;
 		this.minQuantity = minQuantity;
 		this.provider = provider;
 	}
