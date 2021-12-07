@@ -12,8 +12,10 @@ import javax.swing.table.DefaultTableModel;
 import Logical.Client;
 import Logical.Component;
 import Logical.HardDisk;
+import Logical.Invoice;
 import Logical.Microprocessor;
 import Logical.Motherboard;
+import Logical.Quote;
 import Logical.RamCard;
 import Logical.Shop;
 
@@ -55,7 +57,7 @@ public class Sale extends JDialog {
 	private Client client = null;
 	private static JTextField Totaltopaytxt;
 	private JButton Removecartbtn;
-	private static JButton Accionbtn;
+	private JComboBox PaymentMethodcbx;
 
 	public Sale() {
 		
@@ -180,6 +182,14 @@ public class Sale extends JDialog {
 				}
 			}
 		});
+		
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		model = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return rootPaneCheckingEnabled;
+		}
+	};
 		table.setColumnSelectionAllowed(true);
 		scrollPane.setViewportView(table);
 		
@@ -197,37 +207,57 @@ public class Sale extends JDialog {
 				 Component component = productlist.showDialog();
 				 if(component !=null) {
 					 addtocart.add(component);
-					 LoadCart();
+					 
 				 }
+				 LoadCart();
 			}
 		});
 		FindProductsbtn.setBounds(188, 62, 120, 21);
 		panel.add(FindProductsbtn);
 		
 		Removecartbtn = new JButton("Remove");
+		Removecartbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int i = table.getSelectedRow();
+				model.removeRow(i);
+			}
+		});
 		Removecartbtn.setBounds(188, 92, 120, 21);
 		panel.add(Removecartbtn);
 		
 		JButton NewQuotebtn = new JButton("CREATE QUOTE");
-		NewQuotebtn.setBounds(483, 31, 150, 83);
-		contentPanel.add(NewQuotebtn);
-		
-		JButton PrintQuotebtn = new JButton("PRINT QUOTE");
-		PrintQuotebtn.addActionListener(new ActionListener() {
+		NewQuotebtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean quotecompleted = QuoteDone();
+				if(quotecompleted) {
+				Quote quot = new Quote(SalesCodetxt.getText(),Nametxt.getText(),IDtxt.getText(),Totaltopaytxt.getText(),PaymentMethodcbx.toString());
+				Shop.getInstance().AddQuote(quot);
+				JOptionPane.showMessageDialog(null, "Quotation Completed");
+				clear();
+			}else {
+				JOptionPane.showMessageDialog(null, "Please fill all the fields","ERROR",JOptionPane.OK_OPTION);
 			}
+			}
+
 		});
-		PrintQuotebtn.setBounds(657, 30, 150, 83);
-		contentPanel.add(PrintQuotebtn);
-		
+		NewQuotebtn.setBounds(657, 30, 150, 83);
+		contentPanel.add(NewQuotebtn);
+		//Order Option
 		JButton btnConfirmSale = new JButton("CONFIRM SALE");
 		btnConfirmSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				boolean salecompleted = SaleDone();
+				if(salecompleted) {
+				Invoice inv = new Invoice(SalesCodetxt.getText(),Nametxt.getText(),IDtxt.getText(),Totaltopaytxt.getText(),PaymentMethodcbx.toString());
+				Shop.getInstance().AddInvoice(inv);
+				JOptionPane.showMessageDialog(null, "Sale Completed");
 				clear();
+			}else {
+				JOptionPane.showMessageDialog(null, "Please fill all the fields","ERROR",JOptionPane.OK_OPTION);
+			}
 			}
 		});
-		btnConfirmSale.setBounds(483, 135, 150, 83);
+		btnConfirmSale.setBounds(483, 30, 150, 188);
 		contentPanel.add(btnConfirmSale);
 		
 		JButton CancelOrderbtn = new JButton("CANCEL ORDER");
@@ -257,10 +287,10 @@ public class Sale extends JDialog {
 		lblAmotToPay_1.setBounds(539, 672, 114, 25);
 		contentPanel.add(lblAmotToPay_1);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"<<Selection>>", "CASH", "CREDIT"}));
-		comboBox.setBounds(657, 672, 150, 25);
-		contentPanel.add(comboBox);
+		PaymentMethodcbx = new JComboBox();
+		PaymentMethodcbx.setModel(new DefaultComboBoxModel(new String[] {"<<Selection>>", "CASH", "CREDIT"}));
+		PaymentMethodcbx.setBounds(657, 672, 150, 25);
+		contentPanel.add(PaymentMethodcbx);
 		setLocationRelativeTo(null);
 		
 	}
@@ -268,11 +298,9 @@ public class Sale extends JDialog {
 	public static void LoadCart() {
 		// TODO Auto-generated method stub
 		rowProduct  = new Object[model.getColumnCount()];
-		Accionbtn = new JButton("");
 		float TotalAmount = (float) 0.00;
 		model.setRowCount(0);
 		if(addtocart.size()!=0) {
-			Accionbtn.setEnabled(true);
 			for(Component i: addtocart) {
 				rowProduct[0] = i.getSerialNumber();
 				if(i instanceof Motherboard) {
@@ -288,7 +316,23 @@ public class Sale extends JDialog {
 				}
 						Totaltopaytxt.setText("RD$ "+TotalAmount);
 	}
-
+	//Confirm invoice
+	public boolean SaleDone() {
+		boolean aux = false;
+		if( !(SalesCodetxt.getText().equalsIgnoreCase("")) && !(Nametxt.getText().equalsIgnoreCase("")) && !(IDtxt.getText().equalsIgnoreCase("")) && !(Totaltopaytxt.getText().equalsIgnoreCase("")) && !(PaymentMethodcbx.getSelectedItem().toString().equalsIgnoreCase(""))){
+			aux = true;
+		}
+		return aux;
+	}
+	//Confirm Quote
+	private boolean QuoteDone() {
+		boolean aux = false;
+		if( !(SalesCodetxt.getText().equalsIgnoreCase("")) && !(Nametxt.getText().equalsIgnoreCase("")) && !(IDtxt.getText().equalsIgnoreCase("")) && !(Totaltopaytxt.getText().equalsIgnoreCase("")) && !(PaymentMethodcbx.getSelectedItem().toString().equalsIgnoreCase(""))){
+			aux = true;
+		}
+		return aux;
+	}
+	
 	//option to clear sale page
 	private void clear() {
 		

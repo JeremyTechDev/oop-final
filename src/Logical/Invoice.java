@@ -7,78 +7,70 @@ public class Invoice implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String code;
-	private float totalPrice;
-	private User seller;
-	private ArrayList<Component> components;
-	private Client client;
+	private String client;
+	private String customerID;
+	private String totalPrice;
 	private String paymentType;
-	private boolean isPayed;
-
-	public Invoice(String code, float totalPrice, User seller, ArrayList<Component> components, Client client,
-			String paymentType, boolean isPayed) {
+	
+	public Invoice(String code, String client,String customerID,String TotalPrice, String PaymentType) {
 		super();
 		this.code = code;
-		this.totalPrice = totalPrice;
-		this.seller = seller;
-		this.components = components;
 		this.client = client;
+		this.customerID = customerID;
+		this.totalPrice = totalPrice;
 		this.paymentType = paymentType;
-		this.isPayed = isPayed;
 	}
 
 	public String getCode() {
 		return code;
 	}
 
+
 	public void setCode(String code) {
 		this.code = code;
 	}
 
-	public float getTotalPrice() {
-		return totalPrice;
-	}
 
-	public void setTotalPrice(float totalPrice) {
-		this.totalPrice = totalPrice;
-	}
-
-	public User getSeller() {
-		return seller;
-	}
-
-	public void setSeller(User seller) {
-		this.seller = seller;
-	}
-
-	public ArrayList<Component> getComponents() {
-		return components;
-	}
-
-	public void setComponents(ArrayList<Component> components) {
-		this.components = components;
-	}
-
-	public Client getClient() {
+	public String getClient() {
 		return client;
 	}
 
-	public void setClient(Client client) {
+
+	public void setClient(String client) {
 		this.client = client;
 	}
+
+
+	public String getCustomerID() {
+		return customerID;
+	}
+
+
+	public void setCustomerID(String customerID) {
+		this.customerID = customerID;
+	}
+
+
+	public String getTotalPrice() {
+		return totalPrice;
+	}
+
+
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
 
 	public String getPaymentType() {
 		return paymentType;
 	}
 
+
 	public void setPaymentType(String paymentType) {
 		this.paymentType = paymentType;
 	}
 
-	public boolean isPayed() {
-		return isPayed;
-	}
 
-	public void setPayed(boolean isPayed) {
-		this.isPayed = isPayed;
-	}
+	
+		
 }

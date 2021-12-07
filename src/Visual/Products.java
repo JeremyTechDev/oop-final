@@ -94,16 +94,15 @@ public class Products extends JDialog {
 				Add();
 			}
 		});
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setColumnSelectionAllowed(true);
 		scrollPane.setViewportView(table);
 		setLocationRelativeTo(null);
 
 		model = new DefaultTableModel();
 		String[] headers = { "Product Code", "Product Type", "Provider", "Price", "Quantity Available" };
-		
 		model.setColumnIdentifiers(headers);
 		table.setModel(model);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		
 		Serialtxt = new JTextField();
@@ -200,7 +199,7 @@ public class Products extends JDialog {
 		if(productcode !=null) {
 			SpnQuantity.setEnabled(true);
 			if(productstatus) {
-				if(Shop.getInstance().getComponentBySerial(productcode).getQuantity() > 0) {
+				if(Shop.getInstance().getComponentBySerial(productcode).getQuantity()>0) {
 				SpnQuantity.setModel(new SpinnerNumberModel(null, 1, Shop.getInstance().getComponentBySerial(productcode).getQuantity(), 1));
 				}else {
 					SpnQuantity.setModel(new SpinnerNumberModel(0, 0, 0,1));	

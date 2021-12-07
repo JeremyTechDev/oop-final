@@ -7,7 +7,7 @@ public class RamCard extends Component {
 
 	public RamCard(float price, Integer quantity, String serialNumber, Integer minQuantity, Provider provider,
 			String brand, String capacity, String type) {
-		super(price, quantity, serialNumber, minQuantity, provider);
+		super(price, quantity, minQuantity, provider);
 		this.brand = brand;
 		this.capacity = capacity;
 		this.type = type;

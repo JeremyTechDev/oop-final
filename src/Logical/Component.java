@@ -1,25 +1,20 @@
 package Logical;
 
-import java.io.Serializable;
-
-public abstract class Component implements Serializable {
-	private static final long serialVersionUID = 1L;
+public abstract class Component {
 
 	protected float price;
 	protected Integer quantity;
 	protected String serialNumber;
 	protected Integer minQuantity;
 	protected Provider provider;
-	private int RealProductQuantity;
 
-	public Component(float price, Integer quantity, String serialNumber, Integer minQuantity, Provider provider) {
+	public Component(float price, Integer quantity, Integer minQuantity, Provider provider) {
 		super();
 		this.price = price;
 		this.quantity = quantity;
-		this.serialNumber = serialNumber;
+		this.serialNumber = "PDCT - "+Shop.getInstance().getComponents().size();
 		this.minQuantity = minQuantity;
 		this.provider = provider;
-		this.RealProductQuantity = 0;
 	}
 
 	public float getPrice() {
@@ -60,14 +55,6 @@ public abstract class Component implements Serializable {
 
 	public void setProvider(Provider provider) {
 		this.provider = provider;
-	}
-
-	public int getRealProductQuantity() {
-		return RealProductQuantity;
-	}
-
-	public void setRealProductQuantity(int realProductQuantity) {
-		RealProductQuantity = realProductQuantity;
 	}
 
 }

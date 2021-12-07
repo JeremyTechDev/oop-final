@@ -11,6 +11,7 @@ public class Shop implements Serializable {
 	private ArrayList<Provider> providers;
 	private ArrayList<Component> components;
 	private ArrayList<User> users;
+	private ArrayList<Quote> quotations;
 	private static User loggedUser = null;
 	private static Shop instance = null;
 	private static int ProductQuantity = 0;
@@ -26,6 +27,7 @@ public class Shop implements Serializable {
 		this.providers = new ArrayList<Provider>();
 		this.components = new ArrayList<Component>();
 		this.users = new ArrayList<User>();
+		this.quotations = new ArrayList<Quote>();
 		CustomerSalesCodeGen = 10000;
 	}
 
@@ -160,9 +162,9 @@ public class Shop implements Serializable {
 	}
 
 	// Find ComponentbySerial Number
-	public Component getComponentBySerial(String string) {
+	public Component getComponentBySerial(String code) {
 		for (Component comp : this.components) {
-			if (comp.getSerialNumber().equals(string)) {
+			if (comp.getSerialNumber().equals(code)) {
 				return comp;
 			}
 		}
@@ -247,6 +249,14 @@ public class Shop implements Serializable {
 		this.clients = clients;
 	}
 
+	public ArrayList<Quote> getQuotations() {
+		return quotations;
+	}
+
+	public void setQuotations(ArrayList<Quote> quotations) {
+		this.quotations = quotations;
+	}
+
 	public void AddCustomer(Client client) {
 		clients.add(client);
 		CustomerSalesCodeGen++;
@@ -256,5 +266,17 @@ public class Shop implements Serializable {
 	public void AddSuplier(Provider provider) {
 		providers.add(provider);
 	}
+
+	public void AddInvoice(Invoice inv) {
+		invoices.add(inv);
+		
+	}
+	
+	public void AddQuote(Quote quote) {
+		quotations.add(quote);
+		
+	}
+
+
 
 }

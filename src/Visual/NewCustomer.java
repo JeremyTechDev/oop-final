@@ -97,7 +97,6 @@ public class NewCustomer extends JDialog {
 							Shop.getInstance().AddCustomer(client);
 							JOptionPane.showMessageDialog(null, "Customer Added Successfully");
 							CleanFields();
-
 					}else {
 						JOptionPane.showMessageDialog(null, "Please fill all the fields", "ERROR", JOptionPane.OK_OPTION);
 					}

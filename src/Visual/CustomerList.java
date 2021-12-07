@@ -30,6 +30,7 @@ public class CustomerList extends JDialog {
 		setTitle("Customer List");
 		setResizable(false);
 		setModal(true);
+		setLocationRelativeTo(null);
 		setBounds(100, 100, 710, 510);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -60,12 +61,12 @@ public class CustomerList extends JDialog {
 	public static void loadTable() {
 		model.setRowCount(0);
 		row = new Object[(model.getColumnCount())];
-		for (Client i: Shop.getInstance().getClients()) {
-			row[0] = i.getName();
-			row[1] = i.getId();
-			row[2] = i.getAddress();
-			row[3] = i.getPhone();
-			row[4] = i.getCreditLimit();
+		for (Client x: Shop.getInstance().getClients()) {
+			row[0] = x.getId();
+			row[1] = x.getName();
+			row[2] = x.getAddress();
+			row[3] = x.getPhone();
+			row[4] = x.getCreditLimit();
 
 			model.addRow(row);
 		}
