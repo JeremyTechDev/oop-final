@@ -18,6 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Quotations extends JDialog {
 
@@ -61,14 +63,23 @@ public class Quotations extends JDialog {
 		}
 		{
 			JButton btnCompleteSale = new JButton("MAKE ORDER");
-			btnCompleteSale.setBounds(488, 11, 129, 79);
+			btnCompleteSale.setBounds(325, 11, 129, 79);
 			contentPanel.add(btnCompleteSale);
 		}
 		{
 			JButton DeleteQuotebtn = new JButton("DELETE QUOTE");
-			DeleteQuotebtn.setBounds(627, 11, 129, 79);
+			DeleteQuotebtn.setBounds(464, 11, 129, 79);
 			contentPanel.add(DeleteQuotebtn);
 		}
+		
+		JButton btnCancel = new JButton("CANCEL");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnCancel.setBounds(615, 11, 129, 79);
+		contentPanel.add(btnCancel);
 		LoadTable();
 	}
 
@@ -85,5 +96,4 @@ public class Quotations extends JDialog {
 			model.addRow(rowQuote);
 }
 	}
-
 }

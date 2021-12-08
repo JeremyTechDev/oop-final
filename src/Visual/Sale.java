@@ -39,6 +39,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Sale extends JDialog {
+	
+	public static ArrayList<Component> addtocart = null;
+	private static Component selected = null;
+	private ArrayList<Component> components;
+	
+	public static Invoice OrderCompleted = null;
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField Nametxt;
@@ -51,8 +57,7 @@ public class Sale extends JDialog {
 	private static DefaultTableModel model;
 	private static Object[] rowProduct;
 	private static int type;
-	public static ArrayList<Component> addtocart = null;
-	private static Component selected = null;
+	
 	
 	private Client client = null;
 	private static JTextField Totaltopaytxt;
@@ -61,7 +66,7 @@ public class Sale extends JDialog {
 
 	public Sale() {
 		
-		addtocart = new ArrayList<>();
+		addtocart = new ArrayList<Component>();
 		
 		setTitle("Sale");
 		setModal(true);
@@ -200,16 +205,18 @@ public class Sale extends JDialog {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		
+		
+		
 		JButton FindProductsbtn = new JButton("Product List");
 		FindProductsbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Products productlist = new Products(false);
+				Products productlist = new Products(true, false);
 				 Component component = productlist.showDialog();
 				 if(component !=null) {
 					 addtocart.add(component);
-					 
+					 LoadCart();
 				 }
-				 LoadCart();
+				 
 			}
 		});
 		FindProductsbtn.setBounds(188, 62, 120, 21);
@@ -218,8 +225,16 @@ public class Sale extends JDialog {
 		Removecartbtn = new JButton("Remove");
 		Removecartbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i = table.getSelectedRow();
-				model.removeRow(i);
+			Component a = null;
+			if(selected !=null) {
+				for(Component x: addtocart) {
+					if(x.getSerialNumber().equals(selected.getSerialNumber())) {
+						a = x;
+					}
+			}
+				addtocart.remove(a);
+				LoadCart();
+			}
 			}
 		});
 		Removecartbtn.setBounds(188, 92, 120, 21);
@@ -247,15 +262,18 @@ public class Sale extends JDialog {
 		btnConfirmSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean salecompleted = SaleDone();
-				if(salecompleted) {
-				Invoice inv = new Invoice(SalesCodetxt.getText(),Nametxt.getText(),IDtxt.getText(),Totaltopaytxt.getText(),PaymentMethodcbx.toString());
-				Shop.getInstance().AddInvoice(inv);
-				JOptionPane.showMessageDialog(null, "Sale Completed");
-				clear();
-			}else {
-				JOptionPane.showMessageDialog(null, "Please fill all the fields","ERROR",JOptionPane.OK_OPTION);
-			}
-			}
+					if(salecompleted) {
+						Invoice inv = new Invoice(SalesCodetxt.getText(),Nametxt.getText(),IDtxt.getText(),Totaltopaytxt.getText(),PaymentMethodcbx.toString(),null);
+						Shop.getInstance().AddInvoice(inv);
+						JOptionPane.showMessageDialog(null, "Sale Completed");
+						clear();
+						DecreaseStock();
+					}else {
+						JOptionPane.showMessageDialog(null, "Please fill all the fields","ERROR",JOptionPane.OK_OPTION);
+					}
+				}
+
+		
 		});
 		btnConfirmSale.setBounds(483, 30, 150, 188);
 		contentPanel.add(btnConfirmSale);
@@ -303,17 +321,16 @@ public class Sale extends JDialog {
 		if(addtocart.size()!=0) {
 			for(Component i: addtocart) {
 				rowProduct[0] = i.getSerialNumber();
-				if(i instanceof Motherboard) {
-					rowProduct[1]= ((Motherboard)i).getBrand()+"-"+((Motherboard)i).getModel()+"-"+((Motherboard)i).getConnectorType()+"-"+((Motherboard)i).getRamtype();
-				}
-					
+				if(i instanceof Component) {
+					rowProduct[1]= "Component";
 							rowProduct[2] = i.getPrice();
 							rowProduct[3] = i.getQuantity();
 							rowProduct[4] = "RD$ "+i.getQuantity()*i.getPrice();
 							TotalAmount+=i.getQuantity()*i.getPrice();
 							model.addRow(rowProduct);
 					}
-				}
+						}
+					}
 						Totaltopaytxt.setText("RD$ "+TotalAmount);
 	}
 	//Confirm invoice
@@ -324,6 +341,12 @@ public class Sale extends JDialog {
 		}
 		return aux;
 	}
+	
+	//DecreaseStock function
+	private void DecreaseStock() {
+		
+	}
+	
 	//Confirm Quote
 	private boolean QuoteDone() {
 		boolean aux = false;

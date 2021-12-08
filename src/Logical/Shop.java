@@ -2,6 +2,7 @@ package Logical;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Shop implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -77,7 +78,7 @@ public class Shop implements Serializable {
 		Component cartload = null;
 
 		if (product instanceof Motherboard) {
-			Motherboard motherboard = new Motherboard(0, 0, null, null, null, null, null, null, null);
+			Motherboard motherboard = new Motherboard(0, 0, null, 0, null, null, null, null, null);
 			motherboard.setQuantity(product.getQuantity());
 			motherboard.setMinQuantity(product.getMinQuantity());
 			motherboard.setSerialNumber(product.getSerialNumber());
@@ -163,12 +164,13 @@ public class Shop implements Serializable {
 
 	// Find ComponentbySerial Number
 	public Component getComponentBySerial(String code) {
-		for (Component comp : this.components) {
-			if (comp.getSerialNumber().equals(code)) {
-				return comp;
+		Component comp = null;
+		for (Component i : Shop.getInstance().getComponents()) {
+			if (i.getSerialNumber().equals(code)) {
+				comp = i;
 			}
 		}
-		return null;
+		return comp;
 	}
 
 	public boolean registerComponent(Component component) {
@@ -192,6 +194,37 @@ public class Shop implements Serializable {
 
 		return isSaved;
 	}
+	
+	//Invoice generator and Components decreaser.
+	public void createInvoice(String code, String client,String customerID,String TotalPrice, String PaymentType, ArrayList<Component> components ) {
+		Invoice sale = new Invoice(code, client, customerID, TotalPrice, PaymentType, components);
+		invoices.add(sale);
+		DecreaseStock(sale.getCode());
+	}
+	
+	public InvoiceConfirmed FindInvoice(String code) {
+		for(Invoice x: invoices) {
+			if(x instanceof Invoice) {
+				if((x.getCode().equalsIgnoreCase(code))) {
+					return (InvoiceConfirmed) x;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public void DecreaseStock(String code) {
+		InvoiceConfirmed decreasestock = FindInvoice(code);
+		for(Component x: components) {
+			for(Component y: decreasestock.getComponents()) {
+				if(x.getSerialNumber().equals(x.getSerialNumber())) {
+					x.setQuantity(x.getQuantity()-y.getQuantity());	
+				}	
+			}
+		}
+	}
+	
+	//end of invoice code
 
 	public int getLastUserId() {
 		return lastUserId;
@@ -276,7 +309,5 @@ public class Shop implements Serializable {
 		quotations.add(quote);
 		
 	}
-
-
 
 }

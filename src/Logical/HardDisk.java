@@ -6,9 +6,9 @@ public class HardDisk extends Component {
 	private String capacity;
 	private String connectionType;
 
-	public HardDisk(float price, Integer quantity, String serialNumber, Integer minQuantity, Provider provider,
+	public HardDisk(float price, Integer quantity,String SerialNumber, Integer minQuantity, Provider provider,
 			String brand, String model, String capacity,  String connectionType) {
-		super(price, quantity,serialNumber, minQuantity, provider);
+		super(price, quantity, minQuantity, provider);
 		this.brand = brand;
 		this.model = model;
 		this.capacity = capacity;

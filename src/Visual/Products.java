@@ -19,6 +19,7 @@ import Logical.Shop;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -55,9 +56,10 @@ public class Products extends JDialog {
 		return product;
 	}
 
-	public Products(boolean condition) {
+	public Products(boolean condition, boolean condition2) {
 		
 		productstatus = condition;
+		productstatusonly = condition2;
 		
 		setTitle("Products");
 		setResizable(false);
@@ -129,7 +131,6 @@ public class Products extends JDialog {
 		Findbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Shop.getInstance().VerifyProduct(Serialtxt.getText())) {
-					loadTable(true);
 					}else {
 						AddToCartbtn.setEnabled(false);
 						JOptionPane.showMessageDialog(null, "Error: The code '"+Serialtxt.getText()+" was not found.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
@@ -160,10 +161,10 @@ public class Products extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
-		loadTable(condition);
+		LoadTable(true);
 	}
 	//LoadProduct table
-	public void loadTable(boolean finder) {
+	public void LoadTable(boolean finder) {
 		
 		model.setRowCount(0);
 		row = new Object[(model.getColumnCount())];
@@ -175,7 +176,7 @@ public class Products extends JDialog {
 				row[1]= "HardDisk " +((HardDisk)i).getBrand()+"-"+((HardDisk)i).getModel()+"-"+((HardDisk)i).getCapacity()+"-"+((HardDisk)i).getConnectionType();
 			}else {
 				if(i instanceof Motherboard) {
-					row[1]= "MotherBoard " +((Motherboard)i).getBrand()+"-"+((Motherboard)i).getModel()+"-"+((Motherboard)i).getConnectorType();
+					row[1]= "MotherBoard " +((Motherboard)i).getBrand()+"-"+((Motherboard)i).getModel()+"-"+((Motherboard)i).getConnectorType()+"-"+((Motherboard)i).getRamtype();
 				}else {
 					if(i instanceof RamCard) {
 						row[1]= "RamCard " +((RamCard)i).getBrand()+"-"+((RamCard)i).getCapacity()+"-"+((RamCard)i).getType();
@@ -201,13 +202,13 @@ public class Products extends JDialog {
 			SpnQuantity.setEnabled(true);
 			if(productstatus) {
 				if(Shop.getInstance().getComponentBySerial(productcode).getQuantity()>0) {
-				SpnQuantity.setModel(new SpinnerNumberModel(null, 1, Shop.getInstance().getComponentBySerial(productcode).getQuantity(), 1));
+				SpnQuantity.setModel(new SpinnerNumberModel(0, null, Shop.getInstance().getComponentBySerial(productcode).getQuantity(), 1));
 				}else {
 					SpnQuantity.setModel(new SpinnerNumberModel(0, 0, 0,1));	
+				}
 				}
 			}
 		}
 		
 	}
-}
 

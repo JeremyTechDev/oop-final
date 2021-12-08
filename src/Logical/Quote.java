@@ -3,7 +3,7 @@ package Logical;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Invoice implements Serializable {
+public class Quote implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String code;
@@ -11,20 +11,15 @@ public class Invoice implements Serializable {
 	private String customerID;
 	private String totalPrice;
 	private String paymentType;
-	private ArrayList<Component> components;
 	
-	public Invoice(String code, String client,String customerID,String TotalPrice, String PaymentType, ArrayList<Component> components) {
+	public Quote(String code, String client,String customerID,String TotalPrice, String PaymentType) {
 		super();
 		this.code = code;
 		this.client = client;
 		this.customerID = customerID;
 		this.totalPrice = totalPrice;
 		this.paymentType = paymentType;
-		this.components = components;
 	}
-
-
-
 
 	public String getCode() {
 		return code;
@@ -73,14 +68,6 @@ public class Invoice implements Serializable {
 
 	public void setPaymentType(String paymentType) {
 		this.paymentType = paymentType;
-	}
-
-	public ArrayList<Component> getComponents() {
-		return components;
-	}
-
-	public void setComponents(ArrayList<Component> components) {
-		this.components = components;
 	}
 
 

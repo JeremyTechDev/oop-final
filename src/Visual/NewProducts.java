@@ -18,6 +18,7 @@ import Logical.RamCard;
 import Logical.Shop;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -60,6 +61,17 @@ public class NewProducts extends JDialog {
 	private JComboBox MBConectionTypecbx;
 	private JComboBox MBRamTypecbx;
 	private JTextField Serialtxt;
+	private JComboBox PSModelcbx;
+	private JComboBox PSMakecbx;
+	private JComboBox PSConectionTypecbx;
+	private JComboBox PSFrequencycbx;
+	private JComboBox RamMakecbx;
+	private JComboBox RamSizetxt;
+	private JComboBox RamTypecbx;
+	private JComboBox SDManufacturercbx;
+	private JComboBox SDModelcbx;
+	private JComboBox SDMemorySizecbx;
+	private JComboBox SDTypecbx;
 
 	public NewProducts() {
 		setTitle("New Products");
@@ -217,7 +229,7 @@ public class NewProducts extends JDialog {
 		lblNewLabel_6.setBounds(20, 29, 103, 21);
 		MicroprocessorsPanel.add(lblNewLabel_6);
 
-		JComboBox PSMakecbx = new JComboBox();
+		PSMakecbx = new JComboBox();
 		PSMakecbx.setModel(new DefaultComboBoxModel(new String[] { "INTEL", "AMD" }));
 		PSMakecbx.setBounds(20, 55, 125, 25);
 		MicroprocessorsPanel.add(PSMakecbx);
@@ -234,19 +246,19 @@ public class NewProducts extends JDialog {
 		lblNewLabel_6_3.setBounds(470, 29, 103, 21);
 		MicroprocessorsPanel.add(lblNewLabel_6_3);
 
-		JComboBox PSModelcbx = new JComboBox();
+		PSModelcbx = new JComboBox();
 		PSModelcbx.setModel(new DefaultComboBoxModel(new String[] { "AMD RYZEN 3", "AMD RYZEN 5 ", "AMD RYZEN 7",
 				"AMD RYZEN 9", "INTEL I3", "INTEL I5 ", "INTEL I7", "INTEL I9" }));
 		PSModelcbx.setBounds(166, 55, 125, 25);
 		MicroprocessorsPanel.add(PSModelcbx);
 
-		JComboBox PSConectionTypecbx = new JComboBox();
+		PSConectionTypecbx = new JComboBox();
 		PSConectionTypecbx.setModel(new DefaultComboBoxModel(
 				new String[] { "AM1", "AM4", "TRX", "TRX4", "LGA1150", "LGA1151", "LGA1200" }));
 		PSConectionTypecbx.setBounds(320, 55, 125, 25);
 		MicroprocessorsPanel.add(PSConectionTypecbx);
 
-		JComboBox PSFrequencycbx = new JComboBox();
+		PSFrequencycbx = new JComboBox();
 		PSFrequencycbx.setModel(new DefaultComboBoxModel(new String[] { "2.7 GHZ", "2.9 GHZ", "3.0 GHZ", "3.6 GHZ",
 				"3.7 GHZ", "3.8 GHZ", "4.0 GHZ", "4.2 GHZ", "4.3 GHZ", "4.6 GHZ", "5.0 GHZ" }));
 		PSFrequencycbx.setBounds(470, 55, 99, 25);
@@ -264,7 +276,7 @@ public class NewProducts extends JDialog {
 		lblNewLabel_7.setBounds(20, 29, 103, 21);
 		StorageDiskPanel.add(lblNewLabel_7);
 
-		JComboBox SDManufacturercbx = new JComboBox();
+		SDManufacturercbx = new JComboBox();
 		SDManufacturercbx.setModel(
 				new DefaultComboBoxModel(new String[] { "Corsair", "Kingston", "Lexar", "Micron", "Mushkin", "PNY",
 						"Pretec", "Samsung", "SanDisk", "Silicon Power", "Sony", "TDK", "Verbatim", "Viking", "WD" }));
@@ -283,19 +295,19 @@ public class NewProducts extends JDialog {
 		lblNewLabel_7_3.setBounds(470, 33, 103, 21);
 		StorageDiskPanel.add(lblNewLabel_7_3);
 
-		JComboBox SDModelcbx = new JComboBox();
+		SDModelcbx = new JComboBox();
 		SDModelcbx.setModel(
 				new DefaultComboBoxModel(new String[] { "970", "970 PRO", "980", "980 PRO", "BARRACUDA", "FIRECUDA" }));
 		SDModelcbx.setBounds(165, 55, 108, 25);
 		StorageDiskPanel.add(SDModelcbx);
 
-		JComboBox SDMemorySizecbx = new JComboBox();
+		SDMemorySizecbx = new JComboBox();
 		SDMemorySizecbx.setModel(new DefaultComboBoxModel(new String[] { "120GB", "128GB", "240GB", "256GB", "400GB",
 				"500GB", "512GB", "750GB", "1TB", "2TB", "4TB", "6TB", "8TB", "16TB" }));
 		SDMemorySizecbx.setBounds(320, 55, 106, 25);
 		StorageDiskPanel.add(SDMemorySizecbx);
 
-		JComboBox SDTypecbx = new JComboBox();
+		SDTypecbx = new JComboBox();
 		SDTypecbx.setModel(
 				new DefaultComboBoxModel(new String[] { "SATA", "SATA HYBRID", "SSD M.2", "SSD NVME", "SSD SATA" }));
 		SDTypecbx.setBounds(470, 55, 100, 25);
@@ -323,7 +335,7 @@ public class NewProducts extends JDialog {
 		lblNewLabel_4.setBounds(440, 29, 103, 21);
 		RamPanel.add(lblNewLabel_4);
 
-		JComboBox RamMakecbx = new JComboBox();
+		RamMakecbx = new JComboBox();
 		RamMakecbx.setModel(new DefaultComboBoxModel(
 				new String[] { "AOpen", "Arch Memory", "Billionton Systems", "Corsair", "Crucial", "Fujitsu", "G.SKILL",
 						"HYPER X", "INNO3D", "Intel", "KingMax", "Kingston", "Lenovo", "Microchip", "Micron", "PNY",
@@ -331,13 +343,13 @@ public class NewProducts extends JDialog {
 		RamMakecbx.setBounds(20, 55, 125, 25);
 		RamPanel.add(RamMakecbx);
 
-		JComboBox RamSizetxt = new JComboBox();
+		RamSizetxt = new JComboBox();
 		RamSizetxt.setModel(
 				new DefaultComboBoxModel(new String[] { "4 GB", "8 GB", "16 GB", "32 GB", "64 GB", "128 GB" }));
 		RamSizetxt.setBounds(232, 55, 125, 25);
 		RamPanel.add(RamSizetxt);
 
-		JComboBox RamTypecbx = new JComboBox();
+		RamTypecbx = new JComboBox();
 		RamTypecbx.setModel(new DefaultComboBoxModel(new String[] { "DDR", "DDR2", "DDR3", "DDR4" }));
 		RamTypecbx.setBounds(440, 55, 125, 25);
 		RamPanel.add(RamTypecbx);
@@ -478,6 +490,7 @@ public class NewProducts extends JDialog {
 
 						if (minimun > quantity) {
 							// TODO: Add an alarm here: minimun cannot be bigger than quantity
+							JOptionPane.showMessageDialog(null, "Minimun cannot be bigger than quantity","ERROR",JOptionPane.INFORMATION_MESSAGE);
 							return;
 						}
 
@@ -522,7 +535,12 @@ public class NewProducts extends JDialog {
 				getRootPane().setDefaultButton(SaveProductsbtn);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Close");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JPasswordField;
 import javax.swing.JCheckBox;
+import javax.swing.border.EtchedBorder;
+import java.awt.Color;
 
 public class NewUser extends JDialog {
 
@@ -29,31 +31,16 @@ public class NewUser extends JDialog {
 	private JTextField usernameTxt;
 	private JPasswordField passwordTxt;
 	private JLabel idTxt;
-	private JTextPane addressTxt;
 	private JCheckBox adminCheck;
+	private JTextField addressTxt;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			NewUser dialog = new NewUser();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public NewUser() {
 		setResizable(false);
 		setTitle("New User");
-		setBounds(100, 100, 396, 322);
+		setBounds(100, 100, 525, 400);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new TitledBorder(null, "New User", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		contentPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
@@ -66,62 +53,63 @@ public class NewUser extends JDialog {
 		contentPanel.add(idTxt);
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Personal Data:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(6, 28, 384, 132);
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Personal Data:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel.setBounds(6, 28, 499, 132);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 
 		JLabel lblNewLabel_1 = new JLabel("Name:");
-		lblNewLabel_1.setBounds(6, 21, 61, 16);
+		lblNewLabel_1.setBounds(45, 18, 61, 16);
 		panel.add(lblNewLabel_1);
 
 		nameTxt = new JTextField();
-		nameTxt.setBounds(6, 38, 179, 26);
+		nameTxt.setBounds(45, 38, 179, 26);
 		panel.add(nameTxt);
 		nameTxt.setColumns(10);
 
 		phoneTxt = new JTextField();
+		phoneTxt.setBounds(258, 38, 179, 26);
 		phoneTxt.setColumns(10);
-		phoneTxt.setBounds(197, 38, 179, 26);
 		panel.add(phoneTxt);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Phone:");
-		lblNewLabel_1_1.setBounds(197, 21, 61, 16);
+		lblNewLabel_1_1.setBounds(258, 18, 61, 16);
 		panel.add(lblNewLabel_1_1);
 
 		JLabel lblNewLabel_2 = new JLabel("Address:");
-		lblNewLabel_2.setBounds(6, 64, 61, 16);
+		lblNewLabel_2.setBounds(45, 64, 61, 16);
 		panel.add(lblNewLabel_2);
-
-		addressTxt = new JTextPane();
-		addressTxt.setBounds(6, 88, 372, 35);
+		
+		addressTxt = new JTextField();
+		addressTxt.setBounds(45, 90, 392, 26);
 		panel.add(addressTxt);
+		addressTxt.setColumns(10);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Login Data:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(6, 159, 384, 71);
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Login Data:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_1.setBounds(6, 159, 499, 132);
 		contentPanel.add(panel_1);
 		panel_1.setLayout(null);
 
 		JLabel lblNewLabel_3 = new JLabel("Username:");
-		lblNewLabel_3.setBounds(6, 19, 82, 16);
+		lblNewLabel_3.setBounds(45, 34, 82, 16);
 		panel_1.add(lblNewLabel_3);
 
 		usernameTxt = new JTextField();
-		usernameTxt.setBounds(6, 39, 185, 26);
+		usernameTxt.setBounds(45, 60, 185, 26);
 		panel_1.add(usernameTxt);
 		usernameTxt.setColumns(10);
 
 		passwordTxt = new JPasswordField();
-		passwordTxt.setBounds(192, 39, 186, 26);
+		passwordTxt.setBounds(258, 60, 186, 26);
 		panel_1.add(passwordTxt);
 
 		JLabel lblNewLabel_4 = new JLabel("Password:");
-		lblNewLabel_4.setBounds(192, 19, 89, 16);
+		lblNewLabel_4.setBounds(258, 34, 89, 16);
 		panel_1.add(lblNewLabel_4);
 
 		adminCheck = new JCheckBox("Grant ADMIN permissions");
-		adminCheck.setBounds(195, 229, 195, 23);
+		adminCheck.setBounds(310, 297, 195, 23);
 		contentPanel.add(adminCheck);
 		{
 			JPanel buttonPane = new JPanel();
@@ -166,6 +154,7 @@ public class NewUser extends JDialog {
 				JButton cancelButton = new JButton("Close");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
