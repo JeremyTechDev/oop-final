@@ -71,6 +71,17 @@ public class Shop implements Serializable {
 
 		return isSaved;
 	}
+	
+	public void changeCompQuantity(String serial, int changeBy) {
+		for (int i = 0; i < this.components.size(); i++) {
+			if (this.components.get(i).getSerialNumber().equals(serial)) {
+				Component newComp = this.components.get(i);
+				newComp.setQuantity(newComp.getQuantity() + changeBy);
+				this.components.set(i, newComp);
+				break;
+			}
+		}	
+	}
 
 	// option to add product to cart
 	public Component loadCart(String serialNumber) {

@@ -18,8 +18,8 @@ public class Invoice implements Serializable {
 		this.code = code;
 		this.client = client;
 		this.customerID = customerID;
-		this.totalPrice = totalPrice;
-		this.paymentType = paymentType;
+		this.totalPrice = TotalPrice;
+		this.paymentType = PaymentType;
 		this.components = components;
 	}
 

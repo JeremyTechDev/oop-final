@@ -50,8 +50,15 @@ public class Products extends JDialog {
 		setVisible(true);
 		Component product = null;
 		if(productcode !=null) {
+			int quantity = Integer.valueOf(String.valueOf(SpnQuantity.getValue()));
+			
+			if (quantity == 0) {
+				return null;
+			}
+			
 			product = Shop.getInstance().loadCart(productcode);
-			product.setQuantity((int) SpnQuantity.getValue());
+			product.setQuantity(quantity);
+			Shop.getInstance().changeCompQuantity(productcode, quantity * -1);
 		}
 		return product;
 	}
@@ -157,6 +164,12 @@ public class Products extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						productcode = null;
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
