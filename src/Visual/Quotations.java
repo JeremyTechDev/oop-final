@@ -32,7 +32,7 @@ public class Quotations extends JDialog {
 		setTitle("Quotations");
 		setModal(true);
 		setResizable(false);
-		setBounds(100, 100, 770, 550);
+		setBounds(100, 100, 770, 556);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -40,7 +40,7 @@ public class Quotations extends JDialog {
 		{
 			JPanel panel = new JPanel();
 			panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panel.setBounds(10, 100, 734, 400);
+			panel.setBounds(10, 10, 734, 451);
 			contentPanel.add(panel);
 			panel.setLayout(new BorderLayout(0, 0));
 			{
@@ -61,25 +61,19 @@ public class Quotations extends JDialog {
 				}
 			}
 		}
-		{
-			JButton btnCompleteSale = new JButton("MAKE ORDER");
-			btnCompleteSale.setBounds(325, 11, 129, 79);
-			contentPanel.add(btnCompleteSale);
-		}
-		{
-			JButton DeleteQuotebtn = new JButton("DELETE QUOTE");
-			DeleteQuotebtn.setBounds(464, 11, 129, 79);
-			contentPanel.add(DeleteQuotebtn);
-		}
 		
-		JButton btnCancel = new JButton("CANCEL");
-		btnCancel.addActionListener(new ActionListener() {
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 471, 734, 31);
+		contentPanel.add(panel);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JButton btnNewButton = new JButton("Close");
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		btnCancel.setBounds(615, 11, 129, 79);
-		contentPanel.add(btnCancel);
+		panel.add(btnNewButton);
 		LoadTable();
 	}
 

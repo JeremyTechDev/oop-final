@@ -37,6 +37,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class Sale extends JDialog {
 
@@ -241,7 +242,9 @@ public class Sale extends JDialog {
 		Removecartbtn.setBounds(188, 92, 120, 21);
 		panel.add(Removecartbtn);
 
-		JButton NewQuotebtn = new JButton("CREATE QUOTE");
+		JButton NewQuotebtn = new JButton("");
+		NewQuotebtn.setBackground(Color.WHITE);
+		NewQuotebtn.setIcon(new ImageIcon(Sale.class.getResource("/Icons/Quotebtn.png")));
 		NewQuotebtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean quotecompleted = QuoteDone();
@@ -260,14 +263,18 @@ public class Sale extends JDialog {
 		NewQuotebtn.setBounds(657, 30, 150, 83);
 		contentPanel.add(NewQuotebtn);
 		// Order Option
-		JButton btnConfirmSale = new JButton("CONFIRM SALE");
+		JButton btnConfirmSale = new JButton("");
+		btnConfirmSale.setIcon(new ImageIcon(Sale.class.getResource("/Icons/Sale.png")));
+		btnConfirmSale.setBackground(Color.WHITE);
 		btnConfirmSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean salecompleted = SaleDone();
 				if (salecompleted) {
 					Invoice inv = new Invoice(SalesCodetxt.getText(), Nametxt.getText(), IDtxt.getText(),
 							Totaltopaytxt.getText(), PaymentMethodcbx.getSelectedItem().toString(), null);
+					Client client = new Client(IDtxt.getText(), Nametxt.getText(),Addresstxt.getText(), Phonetxt.getText(),null);
 					Shop.getInstance().AddInvoice(inv);
+					Shop.getInstance().AddCustomer(client);
 					JOptionPane.showMessageDialog(null, "Sale Completed");
 					clear();
 					DecreaseStock();
@@ -280,7 +287,9 @@ public class Sale extends JDialog {
 		btnConfirmSale.setBounds(483, 30, 150, 188);
 		contentPanel.add(btnConfirmSale);
 
-		JButton CancelOrderbtn = new JButton("CANCEL ORDER");
+		JButton CancelOrderbtn = new JButton("");
+		CancelOrderbtn.setBackground(Color.WHITE);
+		CancelOrderbtn.setIcon(new ImageIcon(Sale.class.getResource("/Icons/Cancelbtn.png")));
 		CancelOrderbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int option = JOptionPane.showConfirmDialog(null, "Would you like to cancel this order?", "Confirmation",
@@ -370,5 +379,11 @@ public class Sale extends JDialog {
 	private void clear() {
 
 		SalesCodetxt.setText(" JC - " + Shop.getInstance().getInvoices().size());
+		Nametxt.setText(" ");
+		IDtxt.setText(" ");
+		Addresstxt.setText(" ");
+		Phonetxt.setText(" ");
+		Totaltopaytxt.setText("RD$ ");
+		PaymentMethodcbx.setSelectedIndex(0);
 	}
 }
