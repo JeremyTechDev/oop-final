@@ -16,7 +16,6 @@ public class Shop implements Serializable {
 	private static User loggedUser = null;
 	private static Shop instance = null;
 	private static int ProductQuantity = 0;
-	private int CustomerSalesCodeGen;
 	private int lastUserId = 1;
 
 	public final static String shopFilename = "shop.dat";
@@ -29,7 +28,6 @@ public class Shop implements Serializable {
 		this.components = new ArrayList<Component>();
 		this.users = new ArrayList<User>();
 		this.quotations = new ArrayList<Quote>();
-		CustomerSalesCodeGen = 10000;
 	}
 
 	public static void setInstance(Shop shopInstance) {
@@ -303,7 +301,6 @@ public class Shop implements Serializable {
 
 	public void AddCustomer(Client client) {
 		clients.add(client);
-		CustomerSalesCodeGen++;
 
 	}
 
